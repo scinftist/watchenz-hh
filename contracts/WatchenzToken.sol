@@ -16,7 +16,13 @@ contract WatchenzToekn is
     address private _metadataRenderer;
     address private _WatchenzDB;
 
-    constructor() ERC721A("Watchenz", "Wtc") {}
+    //
+    uint256 public constant _price = 0.001 ether;
+    uint256 public constant _duration = 14 days;
+    uint256 public _startTime;
+    uint256 public constant _maxSupply = 20000;
+
+    constructor() ERC721A("Watchenz", "WTC") {}
 
     /// @dev See {IERC165-supportsInterface}.
     function supportsInterface(
@@ -51,7 +57,7 @@ contract WatchenzToekn is
     }
 
     function updateAllMetadata() public onlyOwner {
-        require(_nextTokenId() > 0, "no token to update");
+        require(_nextTokenId() > 0, "no token to update"); // prevents underflow;
         emit BatchMetadataUpdate(_startTokenId(), _nextTokenId() - 1);
     }
 }

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 interface IWatchennzDB {
-    function getWatchenzToken() external view returns (address);
+    event tokenContractSet(address);
 
     function getSetting(
         uint256 tokenId
@@ -18,6 +18,7 @@ interface IWatchennzDB {
     function setLocation(uint256 tokenId, string memory location) external;
 
     function setSetting(
+        uint256 tokenId,
         uint256 timeZone,
         string memory url,
         string memory location
