@@ -1,3 +1,9 @@
 pragma solidity 0.8.17;
 
-contract WatchenzDB {}
+import "./Interfaces/IOwnerOf.sol";
+
+contract WatchenzDB {
+    IOwnerOf private _watchenzToken;
+
+    // set
+}
