@@ -5,6 +5,7 @@ import "erc721a/contracts/ERC721A.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Utils/Whitelist.sol";
 import "./Interfaces/IERC4906.sol";
+import "./Interfaces/IMetadataRenderer.sol";
 
 contract WatchenzToekn is
     IWatchenzToken,
@@ -59,5 +60,29 @@ contract WatchenzToekn is
     function updateAllMetadata() public onlyOwner {
         require(_nextTokenId() > 0, "no token to update"); // prevents underflow;
         emit BatchMetadataUpdate(_startTokenId(), _nextTokenId() - 1);
+    }
+
+    function tokenURI(
+        uint256 tokenId
+    ) public view virtual override(ERC721A, IERC721A) returns (string memory) {
+        require(_exists(tokenId), "token does not exist");
+
+        return IMetadataRender(getMetadataRenderer()).tokenURI(tokenId);
+    }
+
+    //----------------------
+    //     mint and stuf
+    //---------------------
+
+    function mintWatch() public returns (uint256 _tokenId) {
+        _tokenId = _nextTokenId();
+        _safeMint(msg.sender, 1);
+    }
+
+    function mintWatchenz(uint256 quantity) public payable {
+        require(_startTime < block.timestamp, "it's not the time");
+        require(block.timestamp < _startTime + _duration);
+        require(msg.value == _price * quantity);
+        _safeMint(msg.sender, quantity);
     }
 }
