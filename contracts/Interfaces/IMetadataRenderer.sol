@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 interface IMetadataRender {
     function tokenURI(uint256 tokenId) external view returns (string memory);
 
-    function previewTokenUR(
+    function previewTokenURI(
         uint256 tokenId,
         uint256 timeZone,
         string memory url,

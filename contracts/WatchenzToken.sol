@@ -7,7 +7,7 @@ import "./Utils/Whitelist.sol";
 import "./Interfaces/IERC4906.sol";
 import "./Interfaces/IMetadataRenderer.sol";
 
-contract WatchenzToekn is
+contract WatchenzToken is
     IWatchenzToken,
     Ownable,
     ERC721A,
