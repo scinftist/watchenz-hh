@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-interface IMetadataRender {
+interface IMetadataRenderer {
     function tokenURI(uint256 tokenId) external view returns (string memory);
 
     function previewTokenURI(
@@ -10,12 +10,14 @@ interface IMetadataRender {
         string memory location
     ) external view returns (string memory);
 
-    function getSetting(
-        uint256 tokenId
-    )
-        external
-        view
-        returns (uint256 timezone, string memory url, string memory location);
+    // function getSetting(
+    //     uint256 tokenId
+    // )
+    //     external
+    //     view
+    //     returns (uint256 timezone, string memory url, string memory location);
+
+    function setWatchenzDB(address _watchenzDB) external;
 
     function getWatchenzDB() external view returns (address);
 }

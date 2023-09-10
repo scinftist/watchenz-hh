@@ -14,7 +14,7 @@ contract WatchenzToken is
     Whitelist,
     IERC4906
 {
-    address private _metadataRenderer;
+    IMetadataRenderer private _metadataRenderer;
     address private _WatchenzDB;
 
     //
@@ -35,12 +35,12 @@ contract WatchenzToken is
     }
 
     function setMetadateRenderer(address newAddress) public onlyOwner {
-        _metadataRenderer = newAddress;
+        _metadataRenderer = IMetadataRenderer(newAddress);
         emit MetadataRendereChanged(newAddress);
     }
 
     function getMetadataRenderer() public view returns (address) {
-        return _metadataRenderer;
+        return address(_metadataRenderer);
     }
 
     function setDB(address newAddress) public onlyOwner {
@@ -67,7 +67,7 @@ contract WatchenzToken is
     ) public view virtual override(ERC721A, IERC721A) returns (string memory) {
         require(_exists(tokenId), "token does not exist");
 
-        return IMetadataRender(getMetadataRenderer()).tokenURI(tokenId);
+        return _metadataRenderer.tokenURI(tokenId);
     }
 
     //----------------------

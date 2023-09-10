@@ -3,7 +3,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Interfaces/IWToken.sol";
 import "./Interfaces/IWatchenzDB.sol";
 
-contract WatchenzDB is IWatchennzDB, Ownable {
+contract WatchenzDB is IWatchenzDB, Ownable {
     IWToken private _watchenzToken;
 
     mapping(uint256 => uint256) private timeZones;
