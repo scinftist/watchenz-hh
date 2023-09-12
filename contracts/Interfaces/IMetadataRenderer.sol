@@ -6,18 +6,19 @@ interface IMetadataRenderer {
     function previewTokenURI(
         uint256 tokenId,
         uint256 timeZone,
-        string memory url,
+        string memory lcd,
         string memory location
     ) external view returns (string memory);
-
-    // function getSetting(
-    //     uint256 tokenId
-    // )
-    //     external
-    //     view
-    //     returns (uint256 timezone, string memory url, string memory location);
 
     function setWatchenzDB(address _watchenzDB) external;
 
     function getWatchenzDB() external view returns (address);
+
+    function setTimeAPI(string memory _timeAPI) external;
+
+    function getTimeAPI() external view returns (string memory);
+
+    function setWeatherAPI(string memory _timeAPI) external;
+
+    function getWeatherAPI() external view returns (string memory);
 }

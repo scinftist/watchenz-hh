@@ -82,6 +82,7 @@ async function run() {
   getUTC().catch(console.error),
     getWeather().catch(console.error),
     setInterval(actual, 200);
+  setInterval(getWeather, 15000);
 }
 crown.addEventListener("click", async () => {
   if (

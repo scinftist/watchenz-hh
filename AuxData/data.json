@@ -14,17 +14,32 @@
     }
   },
   "color_b": {
-    "0": "<linearGradient id=\"b\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"400\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#D9D9D9\"></stop><stop offset=\"0.588542\" stop-color=\"#B7B7B7\"></stop><stop offset=\"1\" stop-color=\"#808085\"></stop></linearGradient>",
-    "1": "",
-    "2": ""
+    "0": {
+      "data": "<linearGradient id=\"b\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"400\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#D9D9D9\"></stop><stop offset=\"0.588542\" stop-color=\"#B7B7B7\"></stop><stop offset=\"1\" stop-color=\"#808085\"></stop></linearGradient>",
+      "title": ""
+    },
+    "1": {
+      "data": "",
+      "title": ""
+    },
+    "2": {
+      "data": "",
+      "title": ""
+    }
   },
   "color_c": {
     "0": {
       "data": "<linearGradient id=\"c\" x1=\"-1.00001\" y1=\"1.50001\" x2=\"396.5\" y2=\"400\" gradientUnits=\"userSpaceOnUse\"><stop offset=\"0.179967\" stop-color=\"#0000ff\"></stop><stop offset=\"0.777039\" stop-color=\"#0000ff\"></stop></linearGradient>",
       "title": ""
     },
-    "1": "",
-    "2": ""
+    "1": {
+      "data": "",
+      "title": ""
+    },
+    "2": {
+      "data": "",
+      "title": ""
+    }
   },
   "strap": {
     "0": {
@@ -70,7 +85,7 @@
   },
   "hands": {
     "0": {
-      "data": "<g id=\"houru\" transform=\"rotate(481.5,200,200)\"><rect x=\"194\" y=\"125\" width=\"12\" height=\"74\" rx=\"4\" fill=\"url(#a)\" stroke=\"black\" stroke-width=\"2\"></rect></g></g><g filter=\"url(#f1)\"><g id=\"minu\" transform=\"rotate(23.1,200,200)\"><path d=\"M192.102 183.664L199.9 99.1717V199.569L192.102 183.664Z\" fill=\"url(#a)\" stroke=\"black\" stroke-width=\"0.2\"></path><path d=\"M207.898 183.664L200.1 99.1717V199.569L207.898 183.664Z\" fill=\"url(#b)\" stroke=\"black\" stroke-width=\"0.2\"></path></g></g><g filter=\"url(#f1)\"><g id=\"secondu\" transform=\"rotate(310.182,200,200)\"><rect x=\"199.257\" y=\"75\" width=\"1.25175\" height=\"43.0245\" fill=\"url(#c)\"></rect><rect x=\"199\" y=\"129\" width=\"2\" height=\"89\" fill=\"url(#c)\"></rect><path d=\"M205.766 123.908C205.766 127.157 203.132 129.791 199.883 129.791C196.634 129.791 194 127.157 194 123.908C194 120.659 196.634 118.025 199.883 118.025C203.132 118.025 205.766 120.659 205.766 123.908ZM195.651 123.908C195.651 126.245 197.546 128.14 199.883 128.14C202.221 128.14 204.116 126.245 204.116 123.908C204.116 121.57 202.221 119.675 199.883 119.675C197.546 119.675 195.651 121.57 195.651 123.908Z\" fill=\"url(#c)\"></path><circle cx=\"199.865\" cy=\"222.957\" r=\"5.04277\" fill=\"url(#c)\"></circle><circle cx=\"200\" cy=\"200\" r=\"14\" fill=\"url(#a)\" stroke=\"black\" stroke-width=\"2\"></circle></g></g>",
+      "data": "<g filter=\"url(#f1)\"><g id=\"houru\" transform=\"rotate(475.5,200,200)\"><rect x=\"194\" y=\"125\" width=\"12\" height=\"74\" rx=\"6\" fill=\"white\" stroke=\"black\" stroke-width=\"2\"></rect></g></g><g filter=\"url(#f1)\"><g id=\"minu\" transform=\"rotate(308.8,200,200)\"><rect x=\"196\" y=\"96\" width=\"8\" height=\"103\" rx=\"4\" fill=\"white\" stroke=\"black\" stroke-width=\"2\"></rect></g></g><g filter=\"url(#f1)\"><g id=\"secondu\" transform=\"rotate(168.936,200,200)\"><rect x=\"198\" y=\"75\" width=\"4\" height=\"153\" rx=\"2\" fill=\"white\" stroke=\"black\" stroke-width=\"2\"></rect><circle cx=\"200\" cy=\"200\" r=\"14\" fill=\"white\" stroke=\"black\" stroke-width=\"2\"></circle></g></g>",
       "title": ""
     },
     "1": {

@@ -45,32 +45,41 @@ async function main() {
   //
 
   console.log(`generate SVG`);
-  console.log(`${await watchenzRenderer.generateSVG(1)}`);
+  console.log(`${await watchenzRenderer.renderTokenById(1)}`);
   //----
   const jj = require("../AuxData/data.json");
   console.log(jj["color_a"], "the json obj");
   partsList = [
-    "color_a",
+    "color_a", //0
     "color_b",
     "color_c",
-    "strap",
+    "strap", //3
     "dial_indicator",
     "micro_inidcator",
-    "hands",
+    "hands", //6
     "bezel_indicator",
   ];
-  var tt = JSON.stringify(jj, null, 10);
-  console.log(`haw${partsList[1]}`);
+  // let tt = JSON.parse(jj);
+  // console.log(`haw${partsList[1]}`);
   let elements;
   for (let i = 0; i < partsList.length; i++) {
     // str = str + i;
-    elements = tt[partsList[i]];
-    console.log(`1 ${elements}`);
-    for (let element in elements) {
-      // console.log(`${element}`);
-      // await watchenzRenderer.set_svg(i,)
+    elements = jj[partsList[i]];
+    // console.log(`${elements}`);
+    // console.log(` ${Object.keys(elements)}`);
+    for (let _KEY in Object.keys(elements)) {
+      console.log(`${_KEY}`);
+      console.log(`${elements[_KEY].data}`);
+      await watchenzRenderer.set_svg(
+        i,
+        _KEY,
+        elements[_KEY].data,
+        elements[_KEY].title
+      );
     }
   }
+  console.log(`generate SVG`);
+  console.log(`${await watchenzRenderer.renderTokenById(1)}`);
 }
 
 // main

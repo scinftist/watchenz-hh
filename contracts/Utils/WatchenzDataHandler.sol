@@ -19,10 +19,9 @@ contract WatchenzDataHandler is Ownable {
         uint8 _index,
         string memory _data,
         string memory _title
-    ) public returns (bool) {
+    ) public onlyOwner returns (bool) {
         require(svgOpen, "svg has been finalized");
-        // uint8 _c = modeCounter[_mode];
-        // require(_c < 256, "it's full");
+
         mode2index2string[_mode][_index] = _data;
         mode2index2title[_mode][_index] = _title;
         emit svgSet(_mode, _index);
