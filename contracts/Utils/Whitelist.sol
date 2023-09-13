@@ -8,10 +8,15 @@ contract Whitelist is Ownable {
      * @notice Add to whitelist
      */
     function addToWhitelist(
-        address[] calldata toAddAddresses
+        address[] calldata toAddAddresses,
+        uint8[] calldata quantities
     ) external onlyOwner {
+        require(
+            toAddAddresses.length == quantities.length,
+            "length miss mathc"
+        );
         for (uint i = 0; i < toAddAddresses.length; i++) {
-            whitelist[toAddAddresses[i]] = 1;
+            whitelist[toAddAddresses[i]] = quantities[i];
         }
     }
 
@@ -24,5 +29,11 @@ contract Whitelist is Ownable {
         for (uint i = 0; i < toRemoveAddresses.length; i++) {
             delete whitelist[toRemoveAddresses[i]];
         }
+    }
+
+    function getWhitelistQuantity(
+        address _address
+    ) public view returns (uint8) {
+        return whitelist[_address];
     }
 }

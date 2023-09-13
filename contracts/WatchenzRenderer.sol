@@ -29,7 +29,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
     //--- tokenURI U+00b0 \u00b0
     string private constant svgEnd = "</svg>";
     string private constant svgHead =
-        '<svg id="thewatch" width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">';
+        '<svg id="thewatch" width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">';
     string private constant svgPart0 = '<defs id="defs">';
     // colorURLS
     string private constant svgPart1 =

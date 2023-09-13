@@ -80,6 +80,43 @@ async function main() {
   }
   console.log(`generate SVG`);
   console.log(`${await watchenzRenderer.renderTokenById(1)}`);
+
+  acclist = await ethers.getSigners();
+  for (let i = 1; i < 10; i++) {
+    console.log(`${await acclist[i].getAddress()}`);
+  }
+
+  const fs = require("fs");
+  csv = fs.readFileSync("AuxData/WhiteList.csv");
+  // AuxData/WhiteList.csv
+  console.log(`${csv}}`);
+  const _dataArray = await csv.toString().split("\n");
+  let addresses = [];
+  let quantities = [];
+  let temp;
+  for (let i = 0; i < _dataArray.length; i++) {
+    // console.log(`${_dataArray}}`);
+    temp = _dataArray[i].split(",");
+    // console.log(`${temp}`);
+    addresses.push(temp[0]);
+    quantities.push(temp[1]);
+  }
+  console.log(`${quantities}`);
+
+  for (let i = 0; i < 1; i++) {
+    await watchenzToken.addToWhitelist(addresses, quantities);
+  }
+
+  console.log(
+    ` 5 ${await watchenzToken.getWhitelistQuantity(
+      "0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+    )}`
+  );
+  console.log(
+    `8 ${await watchenzToken.getWhitelistQuantity(
+      "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
+    )}`
+  );
 }
 
 // main
