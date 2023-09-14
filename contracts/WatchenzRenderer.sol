@@ -7,6 +7,8 @@ import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 
 import "./Interfaces/IWatchenzDB.sol";
 
+// import
+
 contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
     using Strings for uint256;
 
@@ -84,7 +86,8 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
         string memory _svg = "";
         string memory _crownGaurd = crownGaurdSVG;
         string memory _dd = string(abi.encodePacked(_day, _date));
-        (_timeZone, _lcd, _location) = iwatchenzDB.getSetting(tokenId);
+        TokenSetting memory _setting = iwatchenzDB.getSetting(tokenId);
+        // (_timeZone, _lcd, _location) = iwatchenzDB.getSetting(tokenId);
         _svg = string(
             abi.encodePacked(
                 svgPart0,
@@ -96,7 +99,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 svgPart2,
                 _crownGaurd,
                 svgPart3,
-                _lcd,
+                _setting.dynamicDial,
                 svgPart4,
                 get_svg(4, 0) //minIndicator
             )
@@ -107,7 +110,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 svgPart5,
                 get_svg(5, 0), //hour indicator
                 svgPart6,
-                _location,
+                _setting.locationParameter,
                 svgPart7,
                 _dd,
                 get_svg(6, 0), // hands
@@ -116,7 +119,13 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 svgPart9
             )
         );
-        return string(abi.encodePacked(_svg, getScript(_timeZone, _location)));
+        return
+            string(
+                abi.encodePacked(
+                    _svg,
+                    getScript(_setting.timeZone, _setting.locationParameter)
+                )
+            );
     }
 
     function previewTokenURI(

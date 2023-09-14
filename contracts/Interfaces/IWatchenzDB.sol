@@ -1,30 +1,52 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-interface IWatchenzDB {
+import "./ITokenSetting.sol";
+
+interface IWatchenzDB is ITokenSetting {
     event tokenContractSet(address);
+    event channelContract(address);
 
     function getSetting(
         uint256 tokenId
-    )
-        external
-        view
-        returns (uint256 timeZone, string memory url, string memory location);
+    ) external view returns (TokenSetting memory);
 
-    function setTimeZone(uint256 tokenId, uint256 timeZone) external;
+    function setTimeZone(uint256 tokenId, uint24 timeZone) external payable;
 
-    function seturl(uint256 tokenId, string memory url) external;
+    function setHtmlWrapper(
+        uint256 tokenId,
+        bool _htmlWrapper
+    ) external payable;
 
-    function setLocation(uint256 tokenId, string memory location) external;
+    function setDynamicBackground(
+        uint256 tokenId,
+        string memory _dynamicBackground
+    ) external payable;
+
+    function setDynamicDial(
+        uint256 tokenId,
+        string memory _dynamicDial
+    ) external payable;
+
+    function setLocation(
+        uint256 tokenId,
+        string memory location
+    ) external payable;
 
     function setSetting(
         uint256 tokenId,
-        uint256 timeZone,
-        string memory url,
+        uint24 timeZone,
+        bool htmlWrapper,
+        string memory dynamicBackground,
+        string memory dynamicDial,
         string memory location
-    ) external;
+    ) external payable;
 
     function setTokenContract(address newAddress) external;
 
     function getTokenContract() external view returns (address);
+
+    function setChannelContract(address newAddress) external;
+
+    function getChannelContract() external view returns (address);
 }

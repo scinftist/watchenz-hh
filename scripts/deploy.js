@@ -25,6 +25,14 @@ async function main() {
     `Deployed WatchenzRenderer contract to:${await watchenzRenderer.getAddress()}`
   );
 
+  //-----
+  const watchenzChannel = await ethers.deployContract("WatchenzChannel");
+  console.log("Deploying watchenzChannel Contract...");
+  await watchenzChannel.waitForDeployment();
+  console.log(
+    `Deployed watchenzChannel contract to:${await watchenzChannel.getAddress()}`
+  );
+
   //---set WatchenzToken
   await watchenzToken.setDB(watchenzDB.getAddress());
   console.log(`getDB ${await watchenzToken.getDB()}`);
@@ -42,7 +50,11 @@ async function main() {
   console.log(
     `getWatchenzDB contract ${await watchenzRenderer.getWatchenzDB()}`
   );
-  //
+  //--
+  await watchenzDB.setChannelContract(watchenzChannel.getAddress());
+  console.log(
+    `getChannelContract contract ${await watchenzDB.getChannelContract()}`
+  );
 
   console.log(`generate SVG`);
   console.log(`${await watchenzRenderer.renderTokenById(1)}`);

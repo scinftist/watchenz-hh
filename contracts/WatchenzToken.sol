@@ -20,8 +20,14 @@ contract WatchenzToken is
     //
     uint256 public constant _price = 0.001 ether;
     uint256 public constant _duration = 14 days;
+    uint256 public constant _whitelistPrevilagedTime = 1 days;
     uint256 public _startTime;
-    uint256 public constant _maxSupply = 20000;
+    uint256 public constant maxSupply = 20000;
+    uint256 private constant mintPerTransation = 25;
+    uint256 private _payabaleMintCounter = 0;
+
+    // set before deploy
+    uint256 private constant _numberOfTokenInWhiteList = 100;
 
     constructor() ERC721A("Watchenz", "WTC") {}
 
@@ -71,18 +77,47 @@ contract WatchenzToken is
     }
 
     //----------------------
-    //     mint and stuf
+    //     mint and stuff
     //---------------------
 
-    function mintWatch() public returns (uint256 _tokenId) {
-        _tokenId = _nextTokenId();
-        _safeMint(msg.sender, 1);
+    function whitelistMint() public {
+        // _tokenId = _nextTokenId();
+        require(_startTime < block.timestamp, "it's not the time");
+        require(totalSupply() < maxSupply, "it's finishesd");
+        require(
+            block.timestamp < _startTime + _duration,
+            "mint duration has finished"
+        );
+        // mint in batches of 25 or less
+        uint256 amountRemaining = getWhitelistQuantity(msg.sender);
+        while (amountRemaining < mintPerTransation) {
+            amountRemaining -= mintPerTransation;
+            _safeMint(msg.sender, mintPerTransation);
+        }
+        if (amountRemaining != 0) {
+            _safeMint(msg.sender, amountRemaining);
+        }
     }
 
     function mintWatchenz(uint256 quantity) public payable {
+        if (_payabaleMintCounter > maxSupply - _numberOfTokenInWhiteList) {
+            require(
+                _startTime < block.timestamp + _whitelistPrevilagedTime,
+                "wait for next Phase"
+            );
+        }
+        require(totalSupply() < maxSupply, "it's finishesd");
+        require(
+            quantity <= mintPerTransation,
+            "quantity should be less than 26"
+        );
         require(_startTime < block.timestamp, "it's not the time");
-        require(block.timestamp < _startTime + _duration);
-        require(msg.value == _price * quantity);
+        require(
+            block.timestamp < _startTime + _duration,
+            "mint duration has finished"
+        );
+        require(msg.value == _price * quantity, "wrong value of ETH send");
+        _payabaleMintCounter += quantity;
         _safeMint(msg.sender, quantity);
     }
 }

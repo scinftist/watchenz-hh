@@ -2,7 +2,9 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Whitelist is Ownable {
-    mapping(address => uint8) public whitelist;
+    mapping(address => uint8) private whitelist;
+
+    // uint256 internal _quantityOfWhiteList;
 
     /**
      * @notice Add to whitelist
@@ -17,6 +19,7 @@ contract Whitelist is Ownable {
         );
         for (uint i = 0; i < toAddAddresses.length; i++) {
             whitelist[toAddAddresses[i]] = quantities[i];
+            // _quantityOfWhiteList += quantities[i];
         }
     }
 
