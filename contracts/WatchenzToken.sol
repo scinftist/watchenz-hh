@@ -1,7 +1,7 @@
 pragma solidity ^0.8.17;
 
 import "./Interfaces/IWatchenzToken.sol";
-import "erc721a/contracts/ERC721A.sol";
+import "erc721a/contracts/extensions/ERC721AQueryable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Utils/Whitelist.sol";
 import "./Interfaces/IERC4906.sol";
@@ -10,7 +10,7 @@ import "./Interfaces/IMetadataRenderer.sol";
 contract WatchenzToken is
     IWatchenzToken,
     Ownable,
-    ERC721A,
+    ERC721AQueryable,
     Whitelist,
     IERC4906
 {
