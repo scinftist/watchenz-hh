@@ -92,7 +92,6 @@ async function main() {
   }
   console.log(`generate SVG`);
   console.log(`${await watchenzRenderer.renderTokenById(1)}`);
-
   acclist = await ethers.getSigners();
   for (let i = 1; i < 10; i++) {
     console.log(`${await acclist[i].getAddress()}`);
@@ -129,6 +128,12 @@ async function main() {
       "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
     )}`
   );
+  // let acclist, _signer;
+  // acclist = await ethers.getSigners();
+  _signer = acclist[1];
+  await watchenzToken.connect(_signer).whitelistMint();
+  console.log(`sss`);
+  console.log(`whattttttt ${await watchenzToken.tokenURI(1)}`);
 }
 
 // main

@@ -29,7 +29,10 @@ contract WatchenzToken is
     // set before deploy
     uint256 private constant _numberOfTokenInWhiteList = 100;
 
-    constructor() ERC721A("Watchenz", "WTC") {}
+    // start sale function?
+    constructor() ERC721A("Watchenz", "WTC") {
+        _startTime = block.timestamp;
+    }
 
     /// @dev See {IERC165-supportsInterface}.
     function supportsInterface(
@@ -70,7 +73,7 @@ contract WatchenzToken is
 
     function tokenURI(
         uint256 tokenId
-    ) public view virtual override(ERC721A, IERC721A) returns (string memory) {
+    ) public view override(ERC721A, IERC721A) returns (string memory) {
         require(_exists(tokenId), "token does not exist");
 
         return _metadataRenderer.tokenURI(tokenId);
@@ -89,8 +92,14 @@ contract WatchenzToken is
             "mint duration has finished"
         );
         // mint in batches of 25 or less
+
         uint256 amountRemaining = getWhitelistQuantity(msg.sender);
-        while (amountRemaining < mintPerTransation) {
+        require(
+            amountRemaining != 0,
+            "you are not whitelisted or you have claimed your tokens"
+        );
+        setWhiteListToZero(msg.sender);
+        while (amountRemaining > mintPerTransation) {
             amountRemaining -= mintPerTransation;
             _safeMint(msg.sender, mintPerTransation);
         }
@@ -100,17 +109,20 @@ contract WatchenzToken is
     }
 
     function mintWatchenz(uint256 quantity) public payable {
-        if (_payabaleMintCounter > maxSupply - _numberOfTokenInWhiteList) {
+        if (
+            _payabaleMintCounter + quantity >
+            maxSupply - _numberOfTokenInWhiteList
+        ) {
             require(
-                _startTime < block.timestamp + _whitelistPrevilagedTime,
+                _startTime + _whitelistPrevilagedTime < block.timestamp,
                 "wait for next Phase"
             );
         }
-        require(totalSupply() < maxSupply, "it's finishesd");
-        require(
-            quantity <= mintPerTransation,
-            "quantity should be less than 26"
-        );
+        require(totalSupply() + quantity < maxSupply, "it's finishesd");
+        // require(
+        //     quantity <= mintPerTransation,
+        //     "quantity should be less than 26"
+        // );
         require(_startTime < block.timestamp, "it's not the time");
         require(
             block.timestamp < _startTime + _duration,
@@ -118,6 +130,13 @@ contract WatchenzToken is
         );
         require(msg.value == _price * quantity, "wrong value of ETH send");
         _payabaleMintCounter += quantity;
-        _safeMint(msg.sender, quantity);
+        while (quantity > mintPerTransation) {
+            quantity -= mintPerTransation;
+            _safeMint(msg.sender, mintPerTransation);
+        }
+        if (quantity != 0) {
+            _safeMint(msg.sender, quantity);
+        }
+        // _safeMint(msg.sender, quantity);
     }
 }

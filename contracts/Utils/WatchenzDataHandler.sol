@@ -9,8 +9,6 @@ contract WatchenzDataHandler is Ownable {
     // mapping(uint8 => uint8) private modeCounter;
     event svgSet(uint8 indexed mode, uint8 indexed index);
 
-    // event svgReset(uint8 indexed mode, uint8 indexed index);
-
     constructor() {}
 
     // element title?// ownalbe
@@ -26,7 +24,6 @@ contract WatchenzDataHandler is Ownable {
         mode2index2title[_mode][_index] = _title;
         emit svgSet(_mode, _index);
         return true;
-        // modeCounter[_mode] = _c + 1;
     }
 
     //title?
@@ -34,8 +31,6 @@ contract WatchenzDataHandler is Ownable {
         uint8 _mode,
         uint8 _index
     ) public view returns (string memory) {
-        // uint8 _c = modeCounter[_mode];
-        // require(_index < _c, "index out of range");
         return mode2index2string[_mode][_index];
     }
 
@@ -43,8 +38,6 @@ contract WatchenzDataHandler is Ownable {
         uint8 _mode,
         uint8 _index
     ) public view returns (string memory) {
-        // uint8 _c = modeCounter[_mode];
-        // require(_index < _c, "index out of range");
         return mode2index2title[_mode][_index];
     }
 

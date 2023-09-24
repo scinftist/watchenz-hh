@@ -23,6 +23,10 @@ contract Whitelist is Ownable {
         }
     }
 
+    function setWhiteListToZero(address _minter) internal {
+        delete whitelist[_minter];
+    }
+
     /**
      * @notice Remove from whitelist
      */

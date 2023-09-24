@@ -166,6 +166,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
             abi.encodePacked(svgHead, renderTokenById(tokenId), svgEnd)
         );
         string memory _metadata = "";
+        return "metadate-renderer-placeholder";
     }
 
     //settings for Owner
