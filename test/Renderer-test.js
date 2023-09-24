@@ -42,7 +42,7 @@ describe("testing WatchenzRenderer.sol", () => {
     //---set WatchenzToken
     watchenzToken.setDB(watchenzDB.getAddress());
     if (_verbose) console.log(`getDB ${await watchenzToken.getDB()}`);
-    await watchenzToken.setMetadateRenderer(watchenzDB.getAddress());
+    await watchenzToken.setMetadateRenderer(watchenzRenderer.getAddress());
     if (_verbose)
       console.log(
         `getMetadataRenderer ${await watchenzToken.getMetadataRenderer()}`

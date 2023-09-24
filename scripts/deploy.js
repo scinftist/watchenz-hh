@@ -36,7 +36,7 @@ async function main() {
   //---set WatchenzToken
   await watchenzToken.setDB(watchenzDB.getAddress());
   console.log(`getDB ${await watchenzToken.getDB()}`);
-  await watchenzToken.setMetadateRenderer(watchenzDB.getAddress());
+  await watchenzToken.setMetadateRenderer(watchenzRenderer.getAddress());
   console.log(
     `getMetadataRenderer ${await watchenzToken.getMetadataRenderer()}`
   );

@@ -48,7 +48,9 @@ describe("testing WatchenzToken.sol", () => {
     //---set WatchenzToken
     watchenzToken.setDB(await watchenzDB.getAddress());
     if (_verbose) console.log(`getDB ${await watchenzToken.getDB()}`);
-    await watchenzToken.setMetadateRenderer(await watchenzDB.getAddress());
+    await watchenzToken.setMetadateRenderer(
+      await watchenzRenderer.getAddress()
+    );
     if (_verbose)
       console.log(
         `getMetadataRenderer ${await watchenzToken.getMetadataRenderer()}`
@@ -153,12 +155,11 @@ describe("testing WatchenzToken.sol", () => {
     await watchenzToken
       .connect(_signer)
       .mintWatchenz(_quant, { value: _price * _bigQuant });
-    console.log(`tokenURI: ${await watchenzToken.getMetadataRenderer()}`);
-    console.log(`tokenURI: ${await watchenzRenderer.tokenURI(2)}`);
+
     console.log(`tokenURI: ${await watchenzToken.tokenURI(2)}`);
-    // await expect(await watchenzToken.tokenURI(2)).not.to.be(
-    //   "metadate-renderer-placeholder"
-    // );
+    await expect(await watchenzToken.tokenURI(2)).to.equal(
+      "metadate-renderer-placeholder"
+    );
   });
 
   it("watchenzToken: public mint maxSupply and white list previlaged", async () => {
