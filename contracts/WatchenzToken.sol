@@ -18,13 +18,15 @@ contract WatchenzToken is
     address private _WatchenzDB;
 
     //
-    uint256 public constant _price = 0.001 ether;
-    uint256 public constant _duration = 14 days;
+    uint256 public _price = 0.001 ether;
+    uint256 public _duration = 14 days;
     uint256 public constant _whitelistPrevilagedTime = 1 days;
     uint256 public _startTime;
-    uint256 public constant maxSupply = 20000;
+    uint256 public maxSupply = 20000;
     uint256 private constant mintPerTransation = 25;
     uint256 private _payabaleMintCounter = 0;
+
+    bool public finalizeMaxSUpply = false;
 
     // set before deploy
     uint256 private constant _numberOfTokenInWhiteList = 100;
@@ -59,6 +61,38 @@ contract WatchenzToken is
 
     function getDB() public view returns (address) {
         return _WatchenzDB;
+    }
+
+    //implments as onlyOwner
+    function setPrice(uint256 newPrice) public onlyOwner {
+        _price = newPrice;
+    }
+
+    function getPrice() public view returns (uint256) {
+        return _price;
+    }
+
+    //implments as onlyOwner
+    function setMaxSupply(uint256 newMaxSupply) public onlyOwner {
+        require(!finalizeMaxSUpply, "maxSupply has been finalized");
+        maxSupply = newMaxSupply;
+    }
+
+    function freeze() public onlyOwner {
+        finalizeMaxSUpply = true;
+    }
+
+    function getMaxSupply() public view returns (uint256) {
+        return maxSupply;
+    }
+
+    //implments as onlyOwner
+    function setStartTime(uint256 newStartTime) public onlyOwner {
+        _startTime = newStartTime;
+    }
+
+    function getExpirationTime() public view returns (uint256) {
+        return _startTime + _duration;
     }
 
     function updateTokenMetadata(uint256 tokenId) external {

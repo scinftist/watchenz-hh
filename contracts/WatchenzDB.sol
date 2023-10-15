@@ -56,7 +56,7 @@ contract WatchenzDB is IWatchenzDB, Ownable {
         uint24 timeZone
     ) public payable onlyTokenOwner(tokenId) {
         require(priceMap[0] <= msg.value, "bad price0");
-        require(timeZone <= 86400, "days is 86400 sec");
+        require(timeZone <= 86400, "day is 86400 sec");
         TokenSettings[tokenId].timeZone = timeZone;
     }
 

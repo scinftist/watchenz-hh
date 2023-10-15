@@ -5,7 +5,7 @@ const exp = require("constants");
 let _verbose = false;
 describe("testing WatchenzToken.sol", () => {
   let watchenzToken, watchenzDB, watchenzRenderer, watchenzChannel;
-  const _price = ethers.toBigInt("1000000000000000");
+  let _price = ethers.toBigInt("100000000000000");
   let csv, whiteListArray, acclist, addresses, quantities;
   const _itemInAuction = 5;
   beforeEach(async function () {
@@ -76,7 +76,7 @@ describe("testing WatchenzToken.sol", () => {
 
     addresses = [];
     quantities = [];
-
+    _price = await watchenzToken.getPrice();
     for (let i = 1; i < 10; i++) {
       addresses.push(acclist[i].address);
       quantities.push(getRandomIntInclusive(24, 26));

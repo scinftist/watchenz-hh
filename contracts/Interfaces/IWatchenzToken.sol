@@ -16,6 +16,21 @@ interface IWatchenzToken is IERC721A {
 
     function getDB() external view returns (address);
 
+    //implments as onlyOwner
+    function setPrice(uint256) external;
+
+    function getPrice() external view returns (uint256);
+
+    //implments as onlyOwner
+    function setMaxSupply(uint256) external;
+
+    function getMaxSupply() external view returns (uint256);
+
+    //implments as onlyOwner
+    function setStartTime(uint256) external;
+
+    function getExpirationTime() external view returns (uint256);
+
     // update the metadata of the token if setting is updated can called by the DB contaract
     function updateTokenMetadata(uint256 tokenId) external;
 
