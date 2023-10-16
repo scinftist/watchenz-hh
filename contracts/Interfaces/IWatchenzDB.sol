@@ -42,6 +42,12 @@ interface IWatchenzDB is ITokenSetting {
         string memory location
     ) external payable;
 
+    function setSetting0(
+        uint256 tokenId,
+        TokenSetting memory tokenSetting,
+        TokenSettingFlags memory tokenSettingFlag
+    ) external payable;
+
     function setTokenContract(address newAddress) external;
 
     function getTokenContract() external view returns (address);

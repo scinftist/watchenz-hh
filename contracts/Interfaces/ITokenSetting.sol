@@ -8,4 +8,12 @@ interface ITokenSetting {
         string dynamicDial;
         string locationParameter;
     }
+
+    struct TokenSettingFlags {
+        bool timeZoneFlag;
+        bool htmlWrapperFlag;
+        bool dynamicBackgroundFlag;
+        bool dynamicDialFlag;
+        bool locationParameterFlag;
+    }
 }

@@ -119,6 +119,39 @@ contract WatchenzDB is IWatchenzDB, Ownable {
         );
     }
 
+    function setSetting0(
+        uint256 tokenId,
+        TokenSetting memory tokenSetting,
+        TokenSettingFlags memory tokenSettingFlag
+    ) external payable {
+        TokenSetting memory _nextSetting = TokenSettings[tokenId];
+        uint256 _val = 0;
+        require(tokenSetting.timeZone <= 86400, "days is 86400 sec");
+        if (tokenSettingFlag.timeZoneFlag == true) {
+            _val += priceMap[0];
+            _nextSetting.timeZone = tokenSetting.timeZone;
+        }
+        if (tokenSettingFlag.htmlWrapperFlag == true) {
+            _val += priceMap[1];
+            _nextSetting.htmlWrapper = tokenSetting.htmlWrapper;
+        }
+        if (tokenSettingFlag.dynamicBackgroundFlag == true) {
+            _val += priceMap[2];
+            _nextSetting.dynamicBackground = tokenSetting.dynamicBackground;
+        }
+        if (tokenSettingFlag.dynamicDialFlag == true) {
+            _val += priceMap[3];
+            _nextSetting.dynamicDial = tokenSetting.dynamicDial;
+        }
+        if (tokenSettingFlag.locationParameterFlag == true) {
+            _val += priceMap[4];
+            _nextSetting.locationParameter = tokenSetting.locationParameter;
+        }
+        require(_val <= msg.value, "bad price 5");
+
+        TokenSettings[tokenId] = _nextSetting;
+    }
+
     function getSetting(
         uint256 tokenId
     ) public view returns (TokenSetting memory) {
