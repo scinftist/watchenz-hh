@@ -59,36 +59,57 @@ async function main() {
   console.log(`generate SVG`);
   console.log(`${await watchenzRenderer.renderTokenById(1)}`);
   //----
-  const jj = require("../AuxData/data.json");
+  // const jj = require("../AuxData/data.json");
+
+  const jj = require("../rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json");
+  // rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json
   console.log(jj["color_a"], "the json obj");
   partsList = [
     "color_a", //0
     "color_b",
     "color_c",
     "strap", //3
-    "dial_indicator",
-    "micro_inidcator",
+    "hour_marker",
+    "minute_marker",
     "hands", //6
-    "bezel_indicator",
+    "bezel_marker",
+    "crownGaurd", //8
+    "ref", //9
   ];
+  // crown_gaurd
   // let tt = JSON.parse(jj);
   // console.log(`haw${partsList[1]}`);
   let elements;
-  for (let i = 0; i < partsList.length; i++) {
+  for (let i = 0; i < partsList.length - 2; i++) {
     // str = str + i;
     elements = jj[partsList[i]];
-    // console.log(`${elements}`);
-    // console.log(` ${Object.keys(elements)}`);
+    console.log(`${elements}`);
+    console.log(` ${Object.keys(elements)}`);
     for (let _KEY in Object.keys(elements)) {
-      console.log(`${_KEY}`);
-      console.log(`${elements[_KEY].data}`);
       await watchenzRenderer.set_svg(
         i,
         _KEY,
-        elements[_KEY].data,
-        elements[_KEY].title
+        elements[_KEY].code,
+        elements[_KEY].name
       );
     }
+  }
+
+  // rarity_finalized/Rarity-check/target_folder/GENE_SOURCE.json
+  const jb = require("../rarity_finalized/Rarity-check/target_folder/GENE_SOURCE.json");
+  let elementGene;
+  let geneTemp;
+  for (let i = 0; i < partsList.length; i++) {
+    // str = str + i;
+
+    elementGene = partsList[i] + "_gene";
+    // console.log(`${elements}`);
+    // console.log(` ${Object.keys(elements)}`);
+    // console.log(`${jb[elements]}`);
+    geneTemp = "0x" + jb[elementGene];
+    console.log(`${elementGene}`);
+    console.log(`${geneTemp}`);
+    await watchenzRenderer.setGene(i, geneTemp);
   }
   console.log(`generate SVG`);
   console.log(`${await watchenzRenderer.renderTokenById(1)}`);
