@@ -7,9 +7,8 @@ interface IMetadataRenderer is ITokenSetting {
 
     function previewTokenURI(
         uint256 tokenId,
-        uint256 timeZone,
-        string memory lcd,
-        string memory location
+        TokenSetting memory _tokenSetting,
+        TokenSettingFlags memory _tokenSettingFlag
     ) external view returns (string memory);
 
     function setWatchenzDB(address _watchenzDB) external;

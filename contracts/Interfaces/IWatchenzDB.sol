@@ -11,6 +11,17 @@ interface IWatchenzDB is ITokenSetting {
         uint256 tokenId
     ) external view returns (TokenSetting memory);
 
+    function retriveChannel(
+        uint256 tokenId
+    )
+        external
+        view
+        returns (
+            string memory dynamicBackground,
+            string memory dynamicDial,
+            string memory locationParameter
+        );
+
     function setTimeZone(uint256 tokenId, uint24 timeZone) external payable;
 
     function setHtmlWrapper(

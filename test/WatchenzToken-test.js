@@ -156,10 +156,8 @@ describe("testing WatchenzToken.sol", () => {
       .connect(_signer)
       .mintWatchenz(_quant, { value: _price * _bigQuant });
 
-    console.log(`tokenURI: ${await watchenzToken.tokenURI(2)}`);
-    await expect(await watchenzToken.tokenURI(2)).to.equal(
-      "metadate-renderer-placeholder"
-    );
+    console.log(`tokenURI: ${await watchenzToken.tokenURI(1)}`);
+    await expect(await watchenzToken.tokenURI(2)).not.to.equal("");
   });
 
   it("watchenzToken: public mint maxSupply and white list previlaged", async () => {

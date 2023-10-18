@@ -56,9 +56,6 @@ async function main() {
     `getChannelContract contract ${await watchenzDB.getChannelContract()}`
   );
 
-  console.log(`generate SVG`);
-  console.log(`${await watchenzRenderer.renderTokenById(1)}`);
-  //----
   // const jj = require("../AuxData/data.json");
 
   const jj = require("../rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json");
@@ -66,11 +63,11 @@ async function main() {
   console.log(jj["color_a"], "the json obj");
   partsList = [
     "color_a", //0
-    "color_b",
-    "color_c",
+    "color_b", //1
+    "color_c", //2
     "strap", //3
-    "hour_marker",
-    "minute_marker",
+    "hour_marker", //4
+    "minute_marker", //5
     "hands", //6
     "bezel_marker",
     "crownGaurd", //8
@@ -79,6 +76,7 @@ async function main() {
   // crown_gaurd
   // let tt = JSON.parse(jj);
   // console.log(`haw${partsList[1]}`);
+
   let elements;
   for (let i = 0; i < partsList.length - 2; i++) {
     // str = str + i;
@@ -107,7 +105,7 @@ async function main() {
     // console.log(` ${Object.keys(elements)}`);
     // console.log(`${jb[elements]}`);
     geneTemp = "0x" + jb[elementGene];
-    console.log(`${elementGene}`);
+    console.log(`${elementGene}  ${jb[elementGene].length / 2}`);
     console.log(`${geneTemp}`);
     await watchenzRenderer.setGene(i, geneTemp);
   }
@@ -117,6 +115,7 @@ async function main() {
   for (let i = 1; i < 10; i++) {
     console.log(`${await acclist[i].getAddress()}`);
   }
+  console.log(`genome ${await watchenzRenderer.getGenome(1)}`);
 
   const fs = require("fs");
   csv = fs.readFileSync("AuxData/WhiteList.csv");
@@ -155,6 +154,8 @@ async function main() {
   await watchenzToken.connect(_signer).whitelistMint();
   console.log(`sss`);
   console.log(`whattttttt ${await watchenzToken.tokenURI(1)}`);
+
+  console.log(`fucccccccccck ${"hi".length}`);
 }
 
 // main

@@ -123,7 +123,7 @@ contract WatchenzDB is IWatchenzDB, Ownable {
         uint256 tokenId,
         TokenSetting memory tokenSetting,
         TokenSettingFlags memory tokenSettingFlag
-    ) external payable {
+    ) external payable onlyTokenOwner(tokenId) {
         TokenSetting memory _nextSetting = TokenSettings[tokenId];
         uint256 _val = 0;
         require(tokenSetting.timeZone <= 86400, "days is 86400 sec");
@@ -150,6 +150,20 @@ contract WatchenzDB is IWatchenzDB, Ownable {
         require(_val <= msg.value, "bad price 5");
 
         TokenSettings[tokenId] = _nextSetting;
+    }
+
+    function retriveChannel(
+        uint256 tokenId
+    )
+        external
+        view
+        returns (
+            string memory dynamicBackground,
+            string memory dynamicDial,
+            string memory locationParameter
+        )
+    {
+        return _channel.getChannel(tokenId);
     }
 
     function getSetting(

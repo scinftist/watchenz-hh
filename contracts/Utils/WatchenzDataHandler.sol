@@ -10,6 +10,8 @@ contract WatchenzDataHandler is Ownable {
 
     //gene for ech part
     mapping(uint8 => bytes) private mode2gene;
+    //---- non fungibility
+    mapping(uint256 => uint256) private ExceptionTokens;
 
     // mapping(uint8 => uint8) private modeCounter;
     event svgSet(uint8 indexed mode, uint8 indexed index);
@@ -30,6 +32,19 @@ contract WatchenzDataHandler is Ownable {
     }
 
     constructor() {}
+
+    function setExceptionTokens() public onlyOwner {}
+
+    function getSafeId(uint256 tokenId) public view returns (uint256) {
+        uint256 Id4Genome = 0;
+        uint256 ExceptionId = ExceptionTokens[tokenId];
+        if (ExceptionId == 0) {
+            Id4Genome = tokenId;
+        } else {
+            Id4Genome = ExceptionId;
+        }
+        return Id4Genome;
+    }
 
     // element title?// ownalbe
     function set_svg(
@@ -79,7 +94,8 @@ contract WatchenzDataHandler is Ownable {
 
     // the Id is not neccesarily equal to token Id it might be an exception tokenId to avoid
     // attribute duplication and it make sure that tokens are non-fungible
-    function getGenome(uint256 Id) public view returns (Genome memory) {
+    function getGenome(uint256 tokenId) public view returns (Genome memory) {
+        uint256 Id = getSafeId(tokenId);
         Genome memory _genome;
         bytes memory _tempGene;
 
