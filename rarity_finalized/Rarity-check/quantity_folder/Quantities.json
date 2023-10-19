@@ -1,254 +1,254 @@
 {
-    "bezel_marker": {
-        "0": {
-            "name": "Fluted",
-            "code": 9
-        },
-        "1": {
-            "name": "Dive",
-            "code": 11
-        },
-        "2": {
-            "name": "count-up",
-            "code": 15
-        },
-        "3": {
-            "name": "simple",
-            "code": 6
-        }
+  "bezel_marker": {
+    "0": {
+      "name": "Fluted",
+      "code": 9
     },
-    "color_a": {
-        "0": {
-            "name": "pepenite",
-            "code": 1
-        },
-        "1": {
-            "name": "white gold",
-            "code": 15
-        },
-        "2": {
-            "name": "Immutable Rose Gold",
-            "code": 12
-        },
-        "3": {
-            "name": "Steel",
-            "code": 6
-        },
-        "4": {
-            "name": "Gold",
-            "code": 8
-        },
-        "5": {
-            "name": "Carbide",
-            "code": 11
-        }
+    "1": {
+      "name": "Dive",
+      "code": 11
     },
-    "color_b": {
-        "0": {
-            "name": "Royal Azure",
-            "code": 9
-        },
-        "1": {
-            "name": "Base Pink",
-            "code": 2
-        },
-        "2": {
-            "name": "Tomato",
-            "code": 5
-        },
-        "3": {
-            "name": "Lavender",
-            "code": 5
-        },
-        "4": {
-            "name": "Sandstorm",
-            "code": 1
-        },
-        "5": {
-            "name": "Lambo",
-            "code": 5
-        },
-        "6": {
-            "name": "Zucchini",
-            "code": 7
-        },
-        "7": {
-            "name": "Spruce",
-            "code": 5
-        },
-        "8": {
-            "name": "Tiffany",
-            "code": 5
-        },
-        "9": {
-            "name": "Jaguar",
-            "code": 7
-        },
-        "10": {
-            "name": "Midnight",
-            "code": 5
-        },
-        "11": {
-            "name": "Shiraz",
-            "code": 5
-        }
+    "2": {
+      "name": "count-up",
+      "code": 15
     },
-    "color_c": {
-        "0": {
-            "name": "Gold",
-            "code": 6
-        },
-        "1": {
-            "name": "Hulk",
-            "code": 7
-        },
-        "2": {
-            "name": "Miladyium",
-            "code": 6
-        },
-        "3": {
-            "name": "Carbide",
-            "code": 6
-        },
-        "4": {
-            "name": "white Gold",
-            "code": 6
-        },
-        "5": {
-            "name": "Candy Blue",
-            "code": 8
-        },
-        "6": {
-            "name": "Steel",
-            "code": 6
-        },
-        "7": {
-            "name": "Nakamigium",
-            "code": 6
-        },
-        "8": {
-            "name": "Barbium",
-            "code": 3
-        },
-        "9": {
-            "name": "Immutable Rose Gold",
-            "code": 5
-        }
-    },
-    "hands": {
-        "0": {
-            "name": "Plongeur",
-            "code": 10
-        },
-        "1": {
-            "name": "Duaphine",
-            "code": 14
-        },
-        "2": {
-            "name": "Baton",
-            "code": 7
-        }
-    },
-    "hour_marker": {
-        "0": {
-            "name": "Roman",
-            "code": 11
-        },
-        "1": {
-            "name": "Numerals",
-            "code": 10
-        },
-        "2": {
-            "name": "GM Time",
-            "code": 5
-        },
-        "3": {
-            "name": "Arabic",
-            "code": 2
-        },
-        "4": {
-            "name": "Double Baguette",
-            "code": 7
-        },
-        "5": {
-            "name": "Baguette",
-            "code": 8
-        }
-    },
-    "minute_marker": {
-        "0": {
-            "name": "Railroad track with sub-seconds",
-            "code": 9
-        },
-        "1": {
-            "name": "Sticks-1",
-            "code": 10
-        },
-        "2": {
-            "name": "Sub-seconds",
-            "code": 2
-        },
-        "3": {
-            "name": "Railroad track-1",
-            "code": 8
-        },
-        "4": {
-            "name": "Sticks-2",
-            "code": 6
-        },
-        "5": {
-            "name": "Railroad track-2",
-            "code": 4
-        },
-        "6": {
-            "name": "Sticks-Numerals",
-            "code": 8
-        }
-    },
-    "strap": {
-        "0": {
-            "name": "Jubliee",
-            "code": 7
-        },
-        "1": {
-            "name": "Oyster",
-            "code": 11
-        },
-        "2": {
-            "name": "Jubilee Reverso",
-            "code": 5
-        },
-        "3": {
-            "name": "Genuine Rubber",
-            "code": 4
-        },
-        "4": {
-            "name": "Nato",
-            "code": 10
-        }
-    },
-    "crownGaurd": {
-        "0": {
-            "name": "Simple Crown",
-            "code": 10
-        },
-        "1": {
-            "name": "Crown Gaurd",
-            "code": 19
-        }
-    },
-    "ref": {
-        "0": {
-            "name": "Simple",
-            "code": 3
-        },
-        "1": {
-            "name": "Date",
-            "code": 13
-        },
-        "2": {
-            "name": "Day-Date",
-            "code": 7
-        }
+    "3": {
+      "name": "simple",
+      "code": 6
     }
+  },
+  "color_a": {
+    "0": {
+      "name": "pepenite",
+      "code": 1
+    },
+    "1": {
+      "name": "white gold",
+      "code": 15
+    },
+    "2": {
+      "name": "Immutable Rose Gold",
+      "code": 12
+    },
+    "3": {
+      "name": "Steel",
+      "code": 6
+    },
+    "4": {
+      "name": "Gold",
+      "code": 8
+    },
+    "5": {
+      "name": "Carbide",
+      "code": 11
+    }
+  },
+  "color_b": {
+    "0": {
+      "name": "Royal Azure",
+      "code": 9
+    },
+    "1": {
+      "name": "Base Pink",
+      "code": 2
+    },
+    "2": {
+      "name": "Tomato",
+      "code": 5
+    },
+    "3": {
+      "name": "Lavender",
+      "code": 5
+    },
+    "4": {
+      "name": "Sandstorm",
+      "code": 1
+    },
+    "5": {
+      "name": "Lambo",
+      "code": 5
+    },
+    "6": {
+      "name": "Zucchini",
+      "code": 7
+    },
+    "7": {
+      "name": "Spruce",
+      "code": 5
+    },
+    "8": {
+      "name": "Tiffany",
+      "code": 5
+    },
+    "9": {
+      "name": "Jaguar",
+      "code": 7
+    },
+    "10": {
+      "name": "Midnight",
+      "code": 5
+    },
+    "11": {
+      "name": "Shiraz",
+      "code": 5
+    }
+  },
+  "color_c": {
+    "0": {
+      "name": "Gold",
+      "code": 6
+    },
+    "1": {
+      "name": "Hulk",
+      "code": 7
+    },
+    "2": {
+      "name": "Miladyium",
+      "code": 6
+    },
+    "3": {
+      "name": "Carbide",
+      "code": 6
+    },
+    "4": {
+      "name": "white Gold",
+      "code": 6
+    },
+    "5": {
+      "name": "Candy Blue",
+      "code": 8
+    },
+    "6": {
+      "name": "Steel",
+      "code": 6
+    },
+    "7": {
+      "name": "Nakamigium",
+      "code": 6
+    },
+    "8": {
+      "name": "Barbium",
+      "code": 3
+    },
+    "9": {
+      "name": "Immutable Rose Gold",
+      "code": 5
+    }
+  },
+  "hands": {
+    "0": {
+      "name": "Plongeur",
+      "code": 10
+    },
+    "1": {
+      "name": "Duaphine",
+      "code": 14
+    },
+    "2": {
+      "name": "Baton",
+      "code": 7
+    }
+  },
+  "hour_marker": {
+    "0": {
+      "name": "Roman",
+      "code": 11
+    },
+    "1": {
+      "name": "Numerals",
+      "code": 10
+    },
+    "2": {
+      "name": "GM Time",
+      "code": 5
+    },
+    "3": {
+      "name": "Arabic",
+      "code": 2
+    },
+    "4": {
+      "name": "Double Baguette",
+      "code": 7
+    },
+    "5": {
+      "name": "Baguette",
+      "code": 8
+    }
+  },
+  "minute_marker": {
+    "0": {
+      "name": "Railroad track with sub-seconds",
+      "code": 9
+    },
+    "1": {
+      "name": "Sticks-1",
+      "code": 10
+    },
+    "2": {
+      "name": "Sub-seconds",
+      "code": 2
+    },
+    "3": {
+      "name": "Railroad track-1",
+      "code": 8
+    },
+    "4": {
+      "name": "Sticks-2",
+      "code": 6
+    },
+    "5": {
+      "name": "Railroad track-2",
+      "code": 4
+    },
+    "6": {
+      "name": "Sticks-Numerals",
+      "code": 8
+    }
+  },
+  "strap": {
+    "0": {
+      "name": "Jubliee",
+      "code": 7
+    },
+    "1": {
+      "name": "Oyster",
+      "code": 11
+    },
+    "2": {
+      "name": "Jubilee Reverso",
+      "code": 5
+    },
+    "3": {
+      "name": "Genuine Rubber",
+      "code": 4
+    },
+    "4": {
+      "name": "Nato",
+      "code": 10
+    }
+  },
+  "crownGaurd": {
+    "0": {
+      "name": "Simple Crown",
+      "code": 10
+    },
+    "1": {
+      "name": "Crown Gaurd",
+      "code": 19
+    }
+  },
+  "ref": {
+    "0": {
+      "name": "Dress",
+      "code": 3
+    },
+    "1": {
+      "name": "Date",
+      "code": 13
+    },
+    "2": {
+      "name": "Day-Date",
+      "code": 7
+    }
+  }
 }

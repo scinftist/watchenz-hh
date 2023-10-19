@@ -81,7 +81,15 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
     function renderTokenById(
         uint256 tokenId
     ) public view returns (string memory) {
-        TokenSetting memory _setting = iwatchenzDB.getSetting(tokenId);
+        TokenSetting memory _tokenSetting = iwatchenzDB.getSetting(tokenId);
+        return _renderToken(tokenId, _tokenSetting);
+    }
+
+    function _renderToken(
+        uint256 tokenId,
+        TokenSetting memory _setting
+    ) private view returns (string memory) {
+        Genome memory _genome = getGenome(tokenId);
 
         string memory _svg0 = "";
         string memory _svg1 = "";
@@ -93,11 +101,27 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
         // } else {
         //     Id4Genome = ExceptionId;
         // }
-        string memory _crownGaurd = crownGaurdSVG;
-        string memory _dd = string(abi.encodePacked(_day, _date));
-        string memory _hmask = _hourMask;
-        // (_timeZone, _lcd, _location) = iwatchenzDB.getSetting(tokenId);
-        Genome memory _genome = getGenome(tokenId);
+        string memory _crownGaurd;
+        string memory _dd;
+        string memory _hmask;
+        if (_genome.ref == 0) {
+            _hmask = "";
+            _dd = "";
+        }
+        if (_genome.ref == 1) {
+            _hmask = "";
+
+            _dd = _day;
+        }
+        if (_genome.ref == 2) {
+            _hmask = _hourMask;
+            _dd = string(abi.encodePacked(_day, _date));
+        }
+        if (_genome.crownGaurd == 1) {
+            _crownGaurd = crownGaurdSVG;
+        } else {
+            _crownGaurd = "";
+        }
         _svg0 = string(
             abi.encodePacked(
                 svgPart0,
@@ -120,13 +144,13 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 get_svg(5, _genome.minute_marker), //min marker//5
                 svgPart6,
                 _hmask,
-                svgPart7,
-                get_svg(4, _genome.hour_marker) //hour marker//4
+                svgPart7
             )
         );
 
         _svg2 = string(
             abi.encodePacked(
+                get_svg(4, _genome.hour_marker), //hour marker//4,
                 svgPart8,
                 _dd,
                 get_svg(6, _genome.hands), // hands//6
@@ -189,12 +213,13 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                     .locationParameter;
             }
         }
+        return _renderToken(tokenId, _returnSetting);
     }
 
     function getScript(
         uint256 timeZone,
         string memory location
-    ) internal view returns (string memory) {
+    ) private view returns (string memory) {
         uint256 _offSet = timeZone % 86400;
         string memory _script = string(
             abi.encodePacked(
@@ -215,7 +240,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
     //attributes
     function generateAttributes(
         uint256 tokenId
-    ) internal view returns (string memory) {
+    ) private view returns (string memory) {
         Genome memory _genome = getGenome(tokenId);
 
         string memory _attributes = '"attributes": [';
@@ -267,15 +292,47 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
     }
 
     function tokenURI(uint256 tokenId) public view returns (string memory) {
-        string memory _metadata = '{ "description" : "Friendly  ",'
-        '"external_url": "https://openseacreatures.io/3",'
-        '"image": "https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png",';
+        string
+            memory _htmlHead = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Watchenz</title></head><body>';
+        string memory _htmlEnd = "</body></html>";
+        string memory _metadata = '{ "description" : "This Clockwork is Adjustable",'
+        '"name": "Watchenz",'
+        '"image": "';
+        string memory _temp = '", "animation_url": "';
         // string memory attributes = generateAttributes(tokenId);
+        string memory _rawSVG = renderTokenById(tokenId);
 
-        // string memory img = string(
-        //     abi.encodePacked(svgHead, renderTokenById(tokenId), svgEnd)
-        // );
-        return "metadate-renderer-placeholder";
+        string memory img = string(abi.encodePacked(svgHead, _rawSVG, svgEnd));
+        img = string(
+            abi.encodePacked(
+                "data:image/svg+xml;base64,",
+                Base64.encode(bytes(img))
+            )
+        );
+
+        string memory animation = string(
+            abi.encodePacked(_htmlHead, svgHead, _rawSVG, svgEnd, _htmlEnd)
+        );
+        // mime type html
+        animation = string(
+            abi.encodePacked(
+                "data:text/html;base64,",
+                Base64.encode(bytes(animation))
+            )
+        );
+        return
+            string(
+                abi.encodePacked(
+                    _metadata,
+                    img,
+                    _temp,
+                    animation,
+                    '",',
+                    generateAttributes(tokenId),
+                    "}"
+                )
+            );
+        // return "metadate-renderer-placeholder";
     }
 
     //settings for Owner
