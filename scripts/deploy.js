@@ -32,6 +32,7 @@ async function main() {
   console.log(
     `Deployed watchenzChannel contract to:${await watchenzChannel.getAddress()}`
   );
+  //----
 
   //---set WatchenzToken
   await watchenzToken.setDB(watchenzDB.getAddress());
@@ -44,23 +45,22 @@ async function main() {
   //--- set WatchenzDB
   await watchenzDB.setTokenContract(watchenzToken.getAddress());
   console.log(`getTokenContract ${await watchenzDB.getTokenContract()}`);
-
-  //
-  await watchenzRenderer.setWatchenzDB(watchenzDB.getAddress());
-  console.log(
-    `getWatchenzDB contract ${await watchenzRenderer.getWatchenzDB()}`
-  );
   //--
   await watchenzDB.setChannelContract(watchenzChannel.getAddress());
   console.log(
     `getChannelContract contract ${await watchenzDB.getChannelContract()}`
+  );
+  //--- set watchenzRenderer
+  await watchenzRenderer.setWatchenzDB(watchenzDB.getAddress());
+  console.log(
+    `getWatchenzDB contract ${await watchenzRenderer.getWatchenzDB()}`
   );
 
   // const jj = require("../AuxData/data.json");
 
   const jj = require("../rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json");
   // rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json
-  console.log(jj["color_a"], "the json obj");
+  // console.log(jj["color_a"], "the json obj");
   partsList = [
     "color_a", //0
     "color_b", //1
@@ -78,7 +78,7 @@ async function main() {
   // console.log(`haw${partsList[1]}`);
 
   let elements;
-  for (let i = 0; i < partsList.length - 2; i++) {
+  for (let i = 0; i < partsList.length; i++) {
     // str = str + i;
     elements = jj[partsList[i]];
     console.log(`${elements}`);
@@ -92,7 +92,26 @@ async function main() {
       );
     }
   }
+  ///4Ignore/t.json
+  const jParts = require("../AuxData/SVG_PARTS.json");
+  partsKeys = [
+    "_svgPart0",
+    "_svgPart1",
+    "_svgPart2",
+    "_svgPart3",
+    "_svgPart4",
+    "_svgPart5",
+    "_svgPart6",
+    "_svgPart7",
+    "_svgPart8",
+    "_svgPart9",
+    "_svgPart10",
+  ];
 
+  for (let i = 0; i < partsKeys.length; i++) {
+    // console.log(`olay ${jParts[partsKeys[i]]}`);
+    await watchenzRenderer.setSVGParts(i, jParts[partsKeys[i]]);
+  }
   // rarity_finalized/Rarity-check/target_folder/GENE_SOURCE.json
   const jb = require("../rarity_finalized/Rarity-check/target_folder/GENE_SOURCE.json");
   let elementGene;
@@ -101,21 +120,22 @@ async function main() {
     // str = str + i;
 
     elementGene = partsList[i] + "_gene";
-    // console.log(`${elements}`);
-    // console.log(` ${Object.keys(elements)}`);
-    // console.log(`${jb[elements]}`);
+
     geneTemp = "0x" + jb[elementGene];
     console.log(`${elementGene}  ${jb[elementGene].length / 2}`);
     console.log(`${geneTemp}`);
     await watchenzRenderer.setGene(i, geneTemp);
   }
+  console.log(`fucccccccccck ${"hi".length}`);
+  console.log(`genome ${await watchenzRenderer.getGenome(1)}`);
+
   console.log(`generate SVG`);
+  // console.log(`Pile ${await watchenzDataPile.getPile()}`);
   console.log(`${await watchenzRenderer.renderTokenById(1)}`);
   acclist = await ethers.getSigners();
   for (let i = 1; i < 10; i++) {
     console.log(`${await acclist[i].getAddress()}`);
   }
-  console.log(`genome ${await watchenzRenderer.getGenome(1)}`);
 
   const fs = require("fs");
   csv = fs.readFileSync("AuxData/WhiteList.csv");
@@ -154,8 +174,6 @@ async function main() {
   await watchenzToken.connect(_signer).whitelistMint();
   console.log(`sss`);
   console.log(`whattttttt ${await watchenzToken.tokenURI(1)}`);
-
-  console.log(`fucccccccccck ${"hi".length}`);
 }
 
 // main

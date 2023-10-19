@@ -7,6 +7,8 @@ contract WatchenzDataHandler is Ownable {
     mapping(uint8 => mapping(uint8 => string)) private mode2index2string;
     //title of the svg
     mapping(uint8 => mapping(uint8 => string)) private mode2index2title;
+    //svg Parts
+    mapping(uint256 => string) private index2SVGParts;
 
     //gene for ech part
     mapping(uint8 => bytes) private mode2gene;
@@ -14,6 +16,8 @@ contract WatchenzDataHandler is Ownable {
     mapping(uint256 => uint256) private ExceptionTokens;
 
     // mapping(uint8 => uint8) private modeCounter;
+    event svgPartsSet(uint256 indexed index);
+
     event svgSet(uint8 indexed mode, uint8 indexed index);
 
     event geneSet(uint8 indexed mode);
@@ -90,6 +94,17 @@ contract WatchenzDataHandler is Ownable {
 
     function getGene(uint8 _mode) public view returns (bytes memory) {
         return mode2gene[_mode];
+    }
+
+    function setSVGParts(uint256 _index, string memory _part) public onlyOwner {
+        require(svgOpen, "svg has been finalized");
+
+        index2SVGParts[_index] = _part;
+        emit svgPartsSet(_index);
+    }
+
+    function getSVGParts(uint256 _index) public view returns (string memory) {
+        return index2SVGParts[_index];
     }
 
     // the Id is not neccesarily equal to token Id it might be an exception tokenId to avoid
