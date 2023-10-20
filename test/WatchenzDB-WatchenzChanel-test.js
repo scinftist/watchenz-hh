@@ -3,7 +3,7 @@ const { assert, expect } = require("chai");
 const fs = require("fs");
 const exp = require("constants");
 let _verbose = false;
-describe("testing WatchenzDB.sol and WatchenzChannel.sol", () => {
+describe("testing WatchenzDB.sol ", () => {
   let watchenzToken, watchenzDB, watchenzRenderer, watchenzChannel;
   let _price = ethers.toBigInt("100000000000000");
   let csv, whiteListArray, acclist, addresses, quantities, _servicePrices;

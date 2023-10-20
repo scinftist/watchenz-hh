@@ -94,6 +94,48 @@ describe("testing WatchenzRenderer.sol", () => {
     assert.equal(getDataString, "b-data");
     assert.equal(gettitleString, "b-title");
   });
+  it("WatchenzDataHandler: setSVGParts getSVGParts ", async () => {
+    await watchenzRenderer.setSVGParts(0, "a-part");
+
+    let getPartString = await watchenzRenderer.getSVGParts(0);
+
+    assert.equal(getPartString, "a-part");
+  });
+
+  it("WatchenzDataHandler: reset setSVGParts", async () => {
+    // const _MtokenBalance = await Mtoken.balanceOf(MAH.address);
+    let getDataString = await watchenzRenderer.getSVGParts(1);
+    assert.equal(getDataString, "");
+    await watchenzRenderer.setSVGParts(1, "b-part");
+
+    getDataString = await watchenzRenderer.getSVGParts(1);
+    assert.equal(getDataString, "b-part");
+
+    await watchenzRenderer.setSVGParts(1, "c-part");
+    getDataString = await watchenzRenderer.getSVGParts(1);
+
+    assert.equal(getDataString, "c-part");
+  });
+
+  it("WatchenzDataHandler: setGene getSVGParts ", async () => {
+    await watchenzRenderer.setGene(0, "0x00");
+
+    let getGeneBytes = await watchenzRenderer.getGene(0);
+    // console.log(`${getGeneBytes}`);
+
+    assert.equal(getGeneBytes, "0x00");
+  });
+
+  it("WatchenzDataHandler: reset setGene", async () => {
+    await watchenzRenderer.setGene(1, "0x00");
+
+    let getGeneBytes = await watchenzRenderer.getGene(1);
+
+    assert.equal(getGeneBytes, "0x00");
+    await watchenzRenderer.setGene(1, "0x0102");
+    getGeneBytes = await watchenzRenderer.getGene(1);
+    assert.equal(getGeneBytes, "0x0102");
+  });
 
   it("WatchenzDataHandler: finalize", async () => {
     // const _MtokenBalance = await Mtoken.balanceOf(MAH.address);
@@ -106,6 +148,23 @@ describe("testing WatchenzRenderer.sol", () => {
     await watchenzRenderer.finalizeSVG();
     expect(
       watchenzRenderer.set_svg(0, 0, "b-data", "b-title")
+    ).to.be.revertedWith("svg has been finalized");
+    //-
+    expect(watchenzRenderer.setGene(1, "0x0102")).to.be.revertedWith(
+      "svg has been finalized"
+    );
+    expect(watchenzRenderer.setSVGParts(1, "part-a")).to.be.revertedWith(
+      "svg has been finalized"
+    );
+    expect(watchenzRenderer.setSVGParts(1, "part-a")).to.be.revertedWith(
+      "svg has been finalized"
+    );
+    expect(watchenzRenderer.finalizeSVG()).to.be.revertedWith(
+      "svg has been finalized"
+    );
+
+    expect(
+      watchenzRenderer.setExceptionTokens([1, 2], [2, 3])
     ).to.be.revertedWith("svg has been finalized");
   });
 

@@ -270,7 +270,15 @@ describe("testing WatchenzToken.sol", () => {
     let _quant;
     let _bigQuant;
     // for(let j = 0;j)
-    for (let j = 0; j < 199; j++) {
+    let _maxSupply = Number(await watchenzToken.maxSupply());
+    let _supplyOfWhitelist = Number(
+      await watchenzToken.numberOfTokenInWhiteList()
+    );
+    let l100 = parseInt((_maxSupply - _supplyOfWhitelist) / 100);
+
+    let r100 = parseInt((_maxSupply - _supplyOfWhitelist) % 100);
+
+    for (let j = 0; j < l100; j++) {
       _quant = getRandomIntInclusive(23, 100);
       _bigQuant = BigInt(100);
       _signer = await ethers.getSigner(addresses[j % 9]);
@@ -278,7 +286,11 @@ describe("testing WatchenzToken.sol", () => {
         .connect(_signer)
         .mintWatchenz(100, { value: _price * _bigQuant });
     }
-    console.log(`tot: ${await watchenzToken.totalSupply()}`);
+    await watchenzToken
+      .connect(_signer)
+      .mintWatchenz(r100, { value: _price * BigInt(r100) });
+    if (_verbose)
+      console.log(`total minted: ${await watchenzToken.totalSupply()}`);
     // assert.equal(await watchenzToken.totalSupply(), 20000);
     await expect(
       watchenzToken
@@ -294,19 +306,125 @@ describe("testing WatchenzToken.sol", () => {
     }
   });
 
-  // it("WatchenzDataHandler: finalize", async () => {
-  //   // const _MtokenBalance = await Mtoken.balanceOf(MAH.address);
-  //   await watchenzRenderer.set_svg(0, 0, "a-data", "a-title");
+  it("WatchenzToken: Ownables", async () => {
+    // let owner = await ethers.getSigners()[0];
+    let _signer = await ethers.getSigner(addresses[1 % 9]);
+    // ethers.signer.connect(_signer);
+    expect(
+      watchenzToken.connect(_signer).transferOwnership(addresses[1])
+    ).to.be.revertedWith("Ownable: caller is not the owner");
 
-  //   let getDataString = await watchenzRenderer.get_svg(0, 0);
-  //   let gettitleString = await watchenzRenderer.get_title(0, 0);
-  //   assert.equal(getDataString, "a-data");
-  //   assert.equal(gettitleString, "a-title");
-  //   await watchenzRenderer.finalizeSVG();
-  //   expect(
-  //     watchenzRenderer.set_svg(0, 0, "b-data", "b-title")
-  //   ).to.be.revertedWith("svg has been finalized");
-  // });
+    expect(watchenzToken.connect(_signer).freeze()).to.be.revertedWith(
+      "Ownable: caller is not the owner"
+    );
+    expect(watchenzToken.connect(_signer).setStartTime(100)).to.be.revertedWith(
+      "Ownable: caller is not the owner"
+    );
+    expect(
+      watchenzToken.connect(_signer).updateAllMetadata()
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+    expect(
+      watchenzToken.connect(_signer).setMaxSupply(24000)
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+    expect(
+      watchenzToken
+        .connect(_signer)
+        .setMetadateRenderer(watchenzDB.getAddress())
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+    expect(
+      watchenzToken
+        .connect(_signer)
+        .setMetadateRenderer(watchenzDB.getAddress())
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+    expect(watchenzToken.connect(_signer).setPrice(100)).to.be.revertedWith(
+      "Ownable: caller is not the owner"
+    );
+    expect(
+      watchenzToken.connect(_signer).removeFromWhitelist(addresses)
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzToken.connect(_signer).removeFromWhitelist(addresses)
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+    expect(
+      watchenzToken
+        .connect(_signer)
+        .removeFromWhitelist(addresses.slice(0, 2), quantities.slice(0, 2))
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+  });
+
+  it("WatchenzRender: Ownables", async () => {
+    // let owner = await ethers.getSigners()[0];
+    let _signer = await ethers.getSigner(addresses[1 % 9]);
+    // ethers.signer.connect(_signer);
+    expect(
+      watchenzRenderer.connect(_signer).transferOwnership(addresses[1])
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzRenderer
+        .connect(_signer)
+        .set_svg(1, 1, "not owner", "defentliy not  owner")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+    expect(watchenzRenderer.connect(_signer).finalizeSVG()).to.be.revertedWith(
+      "Ownable: caller is not the owner"
+    );
+
+    expect(
+      watchenzRenderer.connect(_signer).setGene(1, "0x000102")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzRenderer.connect(_signer).setSVGParts(1, "not a good part")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzRenderer.connect(_signer).setWatchenzDB(watchenzDB.getAddress())
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzRenderer.connect(_signer).setTimeAPI("not owner api time")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzRenderer.connect(_signer).setWeatherAPI("not owner wheather time")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+  });
+  it("WatchenzDB: Ownables", async () => {
+    // let owner = await ethers.getSigners()[0];
+    let _signer = await ethers.getSigner(addresses[1 % 9]);
+    // ethers.signer.connect(_signer);
+    expect(
+      watchenzDB.connect(_signer).transferOwnership(addresses[1])
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzDB.connect(_signer).setTokenContract(watchenzToken.getAddress())
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(watchenzDB.connect(_signer).setPrice(666)).to.be.revertedWith(
+      "Ownable: caller is not the owner"
+    );
+  });
+  it("WatchenzChannel: Ownables", async () => {
+    // let owner = await ethers.getSigners()[0];
+    let _signer = await ethers.getSigner(addresses[1 % 9]);
+    // ethers.signer.connect(_signer);
+    expect(
+      watchenzChannel.connect(_signer).transferOwnership(addresses[1])
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzChannel.connect(_signer).setDynamicBackGround("random url")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+
+    expect(
+      watchenzDB.connect(_signer).setDynamicDial("another randome url")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+    expect(
+      watchenzDB.connect(_signer).setLocationParameter(" randome  location")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+  });
 
   // maybe onlyOwner
 });

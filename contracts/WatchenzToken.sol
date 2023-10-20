@@ -22,14 +22,14 @@ contract WatchenzToken is
     uint256 public _duration = 14 days;
     uint256 public constant _whitelistPrevilagedTime = 1 days;
     uint256 public _startTime;
-    uint256 public maxSupply = 20000;
+    uint256 public maxSupply = 24000;
     uint256 private constant mintPerTransation = 25;
     uint256 private _payabaleMintCounter = 0;
 
     bool public finalizeMaxSUpply = false;
 
     // set before deploy
-    uint256 private constant _numberOfTokenInWhiteList = 100;
+    uint256 public constant numberOfTokenInWhiteList = 299;
 
     // start sale function?
     constructor() ERC721A("Watchenz", "WTC") {
@@ -145,7 +145,7 @@ contract WatchenzToken is
     function mintWatchenz(uint256 quantity) public payable {
         if (
             _payabaleMintCounter + quantity >
-            maxSupply - _numberOfTokenInWhiteList
+            maxSupply - numberOfTokenInWhiteList
         ) {
             require(
                 _startTime + _whitelistPrevilagedTime < block.timestamp,
