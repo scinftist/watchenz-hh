@@ -88,14 +88,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
     function _renderSVG1(
         Genome memory _genome,
         TokenSetting memory _setting
-    )
-        private
-        view
-        returns (
-            // Pile memory _pile
-            string memory
-        )
-    {
+    ) private view returns (string memory) {
         string memory _crownGaurd;
         if (_genome.crownGaurd == 1) {
             _crownGaurd = crownGaurdSVG;
@@ -167,60 +160,10 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
         TokenSetting memory _setting
     ) private view returns (string memory) {
         Genome memory _genome = getGenome(tokenId);
-        // Pile memory _pile = dataPile.getPile();
-        // string memory _svg0 = "";
+
         string memory _svg1 = _renderSVG1(_genome, _setting);
 
         string memory _svg2 = _renderSVG2(_genome);
-        //  string memory _svg1 = "";
-
-        //         string memory _svg2 = "";
-
-        // string memory _crownGaurd;
-        // string memory _dd;
-        // string memory _hmask;
-        // if (_genome.ref == 0) {
-        //     _hmask = "";
-        //     _dd = "";
-        // }
-        // if (_genome.ref == 1) {
-        //     _hmask = "";
-
-        //     _dd = _day;
-        // }
-        // if (_genome.ref == 2) {
-        //     _hmask = _hourMask;
-        //     _dd = string(abi.encodePacked(_day, _date));
-        // }
-        // if (_genome.crownGaurd == 1) {
-        //     _crownGaurd = crownGaurdSVG;
-        // } else {
-        //     _crownGaurd = "";
-        // }
-        // _svg0 = string(
-        //     abi.encodePacked(
-        //         _pile.svgPart0,
-        //         get_svg(0, _genome.color_a),
-        //         get_svg(1, _genome.color_b),
-        //         get_svg(2, _genome.color_c),
-        //         _pile.svgPart1,
-        //         _setting.dynamicBackground,
-        //         _pile.svgPart2,
-        //         get_svg(3, _genome.strap), //strap
-        //         _pile.svgPart3
-        //     )
-        // );
-
-        // _svg1 = string(
-        //     abi.encodePacked(
-        //         _crownGaurd,
-        //         _pile.svgPart4,
-        //         _setting.dynamicDial,
-        //         _pile.svgPart5,
-        //         get_svg(5, _genome.minute_marker), //min marker//5
-        //         _pile.svgPart6
-        //     )
-        // );
 
         return
             string(

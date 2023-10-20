@@ -74,6 +74,111 @@ describe("testing WatchenzToken.sol", () => {
         `getChannelContract contract ${await watchenzDB.getChannelContract()}`
       );
 
+    if (_verbose) console.log(`setting svgs....`);
+    const jj = require("../rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json");
+
+    partsList = [
+      "color_a", //0
+      "color_b", //1
+      "color_c", //2
+      "strap", //3
+      "hour_marker", //4
+      "minute_marker", //5
+      "hands", //6
+      "bezel_marker",
+      "crownGaurd", //8
+      "ref", //9
+    ];
+
+    let elements;
+    for (let i = 0; i < partsList.length; i++) {
+      elements = jj[partsList[i]];
+      // console.log(`${elements}`);
+      // console.log(` ${Object.keys(elements)}`);
+      for (let _KEY in Object.keys(elements)) {
+        await watchenzRenderer.set_svg(
+          i,
+          _KEY,
+          elements[_KEY].code,
+          elements[_KEY].name
+        );
+      }
+    }
+    if (_verbose) console.log(`svgs have been set`);
+    // core patrs of Watchenz
+    if (_verbose) console.log(`setting SVG_parts....`);
+    const jParts = require("../AuxData/SVG_PARTS.json");
+    partsKeys = [
+      "_svgPart0",
+      "_svgPart1",
+      "_svgPart2",
+      "_svgPart3",
+      "_svgPart4",
+      "_svgPart5",
+      "_svgPart6",
+      "_svgPart7",
+      "_svgPart8",
+      "_svgPart9",
+      "_svgPart10",
+    ];
+
+    for (let i = 0; i < partsKeys.length; i++) {
+      await watchenzRenderer.setSVGParts(i, jParts[partsKeys[i]]);
+    }
+    //--------
+    if (_verbose) console.log(`setting Genes....`);
+    const jb = require("../rarity_finalized/Rarity-check/target_folder/GENE_SOURCE.json");
+    let elementGene;
+    let geneTemp;
+    for (let i = 0; i < partsList.length; i++) {
+      elementGene = partsList[i] + "_gene";
+      geneTemp = "0x" + jb[elementGene];
+      await watchenzRenderer.setGene(i, geneTemp);
+    }
+    if (_verbose) console.log(`Genes has been set`);
+
+    acclist = await ethers.getSigners();
+    // for (let i = 1; i < 10; i++) {
+    //   console.log(`${await acclist[i].getAddress()}`);
+    // }
+    if (_verbose) console.log(`setting exception tokenIds...`);
+    const fs = require("fs");
+    csv_exceptional = fs.readFileSync(
+      "./rarity_finalized/Rarity-check/target_folder/exceptional_out.csv"
+    );
+    //exceptionTokens for nonFungibility
+    const _tokenArray = await csv_exceptional
+      .toString()
+      .split("\n")
+      .slice(1, -1);
+    let tokenIds = [];
+    let safeIds = [];
+    let tempVal;
+    for (let i = 0; i < _tokenArray.length; i++) {
+      // console.log(`${_dataArray}}`);
+      tempVal = _tokenArray[i].split(",");
+      // console.log(`${temp}`);
+      safeIds.push(parseInt(tempVal[0]) + 24000);
+      tokenIds.push(tempVal[1]);
+    }
+
+    let lenSafeId = safeIds.length;
+    for (let i = 0; i < 4; i++) {
+      if (lenSafeId >= 25) {
+        await watchenzRenderer.setExceptionTokens(
+          tokenIds.slice(0 + i * 25, 0 + i * 25 + 25),
+          safeIds.slice(0 + i * 25, 0 + i * 25 + 25)
+        );
+      } else {
+        await watchenzRenderer.setExceptionTokens(
+          tokenIds.slice(0 + i * 25, 0 + i * 25 + lenSafeId),
+          safeIds.slice(0 + i * 25, 0 + i * 25 + lenSafeId)
+        );
+      }
+      lenSafeId = lenSafeId - i * 25;
+    }
+    if (_verbose) console.log(`exception tokenIds have been set`);
+
     addresses = [];
     quantities = [];
     _price = await watchenzToken.getPrice();
@@ -156,7 +261,7 @@ describe("testing WatchenzToken.sol", () => {
       .connect(_signer)
       .mintWatchenz(_quant, { value: _price * _bigQuant });
 
-    console.log(`tokenURI: ${await watchenzToken.tokenURI(1)}`);
+    if (_verbose) console.log(`tokenURI: ${await watchenzToken.tokenURI(1)}`);
     await expect(await watchenzToken.tokenURI(2)).not.to.equal("");
   });
 

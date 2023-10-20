@@ -37,7 +37,17 @@ contract WatchenzDataHandler is Ownable {
 
     constructor() {}
 
-    function setExceptionTokens() public onlyOwner {}
+    function setExceptionTokens(
+        uint256[] calldata tokenIds,
+        uint256[] calldata safeIds
+    ) external onlyOwner {
+        require(svgOpen, "svg has been finalized");
+        require(tokenIds.length == safeIds.length, "length miss match");
+        for (uint i = 0; i < tokenIds.length; i++) {
+            ExceptionTokens[tokenIds[i]] = safeIds[i];
+            // _quantityOfWhiteList += quantities[i];
+        }
+    }
 
     function getSafeId(uint256 tokenId) public view returns (uint256) {
         uint256 Id4Genome = 0;
