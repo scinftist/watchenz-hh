@@ -419,10 +419,12 @@ describe("testing WatchenzToken.sol", () => {
     ).to.be.revertedWith("Ownable: caller is not the owner");
 
     expect(
-      watchenzDB.connect(_signer).setDynamicDial("another randome url")
+      watchenzChannel.connect(_signer).setDynamicDial("another randome url")
     ).to.be.revertedWith("Ownable: caller is not the owner");
     expect(
-      watchenzDB.connect(_signer).setLocationParameter(" randome  location")
+      watchenzChannel
+        .connect(_signer)
+        .setLocationParameter(" randome  location")
     ).to.be.revertedWith("Ownable: caller is not the owner");
   });
 
