@@ -22,38 +22,38 @@ interface IWatchenzDB is ITokenSetting {
             string memory locationParameter
         );
 
-    function setTimeZone(uint256 tokenId, uint24 timeZone) external payable;
+    // function setTimeZone(uint256 tokenId, uint24 timeZone) external payable;
 
-    function setHtmlWrapper(
-        uint256 tokenId,
-        bool _htmlWrapper
-    ) external payable;
+    // function setHtmlWrapper(
+    //     uint256 tokenId,
+    //     bool _htmlWrapper
+    // ) external payable;
 
-    function setDynamicBackground(
-        uint256 tokenId,
-        string memory _dynamicBackground
-    ) external payable;
+    // function setDynamicBackground(
+    //     uint256 tokenId,
+    //     string memory _dynamicBackground
+    // ) external payable;
 
-    function setDynamicDial(
-        uint256 tokenId,
-        string memory _dynamicDial
-    ) external payable;
+    // function setDynamicDial(
+    //     uint256 tokenId,
+    //     string memory _dynamicDial
+    // ) external payable;
 
-    function setLocation(
-        uint256 tokenId,
-        string memory location
-    ) external payable;
+    // function setLocation(
+    //     uint256 tokenId,
+    //     string memory location
+    // ) external payable;
+
+    // function setSetting(
+    //     uint256 tokenId,
+    //     uint24 timeZone,
+    //     bool htmlWrapper,
+    //     string memory dynamicBackground,
+    //     string memory dynamicDial,
+    //     string memory location
+    // ) external payable;
 
     function setSetting(
-        uint256 tokenId,
-        uint24 timeZone,
-        bool htmlWrapper,
-        string memory dynamicBackground,
-        string memory dynamicDial,
-        string memory location
-    ) external payable;
-
-    function setSetting0(
         uint256 tokenId,
         TokenSetting memory tokenSetting,
         TokenSettingFlags memory tokenSettingFlag

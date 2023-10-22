@@ -93,42 +93,42 @@ describe("testing WatchenzDB.sol ", () => {
       //   quantities.push(getRandomIntInclusive(24, 26));
     }
   });
-  it("watchenzDB: setTImeZone", async () => {
-    let _signer;
+  // it("watchenzDB: setTImeZone", async () => {
+  //   let _signer;
 
-    _signer = await ethers.getSigner(addresses[1]);
-    let _value = BigInt(_servicePrices[0]);
-    await watchenzToken
-      .connect(_signer)
-      .mintWatchenz(5, { value: _price * BigInt(5) });
-    console.log(`servicePrice0: ${await watchenzDB.getPrice(0)}`);
-    await expect(BigInt(await watchenzDB.getPrice(0))).to.equal(
-      _servicePrices[0]
-    );
-    await expect(
-      watchenzDB.connect(_signer).setTimeZone(1, 1234, {
-        value: await watchenzDB.getPrice(0),
-      })
-    ).not.to.be.reverted;
+  //   _signer = await ethers.getSigner(addresses[1]);
+  //   let _value = BigInt(_servicePrices[0]);
+  //   await watchenzToken
+  //     .connect(_signer)
+  //     .mintWatchenz(5, { value: _price * BigInt(5) });
+  //   console.log(`servicePrice0: ${await watchenzDB.getPrice(0)}`);
+  //   await expect(BigInt(await watchenzDB.getPrice(0))).to.equal(
+  //     _servicePrices[0]
+  //   );
+  //   await expect(
+  //     watchenzDB.connect(_signer).setTimeZone(1, 1234, {
+  //       value: await watchenzDB.getPrice(0),
+  //     })
+  //   ).not.to.be.reverted;
 
-    await expect(
-      watchenzDB.connect(_signer).setTimeZone(1, 86401, {
-        value: await watchenzDB.getPrice(0),
-      })
-    ).to.be.revertedWith("day is 86400 sec");
+  //   await expect(
+  //     watchenzDB.connect(_signer).setTimeZone(1, 86401, {
+  //       value: await watchenzDB.getPrice(0),
+  //     })
+  //   ).to.be.revertedWith("day is 86400 sec");
 
-    await expect(
-      watchenzDB.connect(_signer).setTimeZone(1, 1234, {
-        value: 1111,
-      })
-    ).to.be.revertedWith("bad price0");
-    _signer = await ethers.getSigner(addresses[2]);
-    await expect(
-      watchenzDB.connect(_signer).setTimeZone(1, 1234, {
-        value: await watchenzDB.getPrice(0),
-      })
-    ).to.be.revertedWith("not yours");
-  });
+  //   await expect(
+  //     watchenzDB.connect(_signer).setTimeZone(1, 1234, {
+  //       value: 1111,
+  //     })
+  //   ).to.be.revertedWith("bad price0");
+  //   _signer = await ethers.getSigner(addresses[2]);
+  //   await expect(
+  //     watchenzDB.connect(_signer).setTimeZone(1, 1234, {
+  //       value: await watchenzDB.getPrice(0),
+  //     })
+  //   ).to.be.revertedWith("not yours");
+  // });
 
   //   it("watchenzToken: double mint in whitelist prevented", async () => {
   //     let _signer;

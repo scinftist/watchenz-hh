@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 interface ITokenSetting {
     struct TokenSetting {
         uint24 timeZone;
-        bool htmlWrapper;
+        // bool htmlWrapper;
         string dynamicBackground;
         string dynamicDial;
         string locationParameter;
@@ -11,7 +11,7 @@ interface ITokenSetting {
 
     struct TokenSettingFlags {
         bool timeZoneFlag;
-        bool htmlWrapperFlag;
+        // bool htmlWrapperFlag;
         bool dynamicBackgroundFlag;
         bool dynamicDialFlag;
         bool locationParameterFlag;

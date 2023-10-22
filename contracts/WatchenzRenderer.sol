@@ -191,9 +191,9 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
         if (_tokenSettingFlag.timeZoneFlag == true) {
             _returnSetting.timeZone = _tokenSetting.timeZone;
         }
-        if (_tokenSettingFlag.htmlWrapperFlag == true) {
-            _returnSetting.htmlWrapper = _tokenSetting.htmlWrapper;
-        }
+        // if (_tokenSettingFlag.htmlWrapperFlag == true) {
+        //     _returnSetting.htmlWrapper = _tokenSetting.htmlWrapper;
+        // }
         if (_tokenSettingFlag.dynamicBackgroundFlag == true) {
             if (bytes(_tokenSetting.dynamicBackground).length == 0) {
                 _returnSetting.dynamicBackground = _defualtBackground;
