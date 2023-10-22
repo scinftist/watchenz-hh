@@ -20,7 +20,7 @@ contract WatchenzToken is
     //
     uint256 public _price = 0.001 ether;
     uint256 public _duration = 14 days;
-    uint256 public constant _whitelistPrevilagedTime = 1 days;
+    uint256 public constant _whitelistPrevilagedTime = 3 days;
     uint256 public _startTime;
     uint256 public maxSupply = 24000;
     uint256 private constant mintPerTransation = 25;
@@ -75,6 +75,7 @@ contract WatchenzToken is
     //implments as onlyOwner
     function setMaxSupply(uint256 newMaxSupply) public onlyOwner {
         require(!finalizeMaxSUpply, "maxSupply has been finalized");
+        require(newMaxSupply <= 24000, "hard limit of 24k");
         maxSupply = newMaxSupply;
     }
 
