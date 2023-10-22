@@ -34,12 +34,12 @@ contract WatchenzDB is IWatchenzDB, Ownable {
     }
 
     function setPrice(uint256 index, uint256 price) public onlyOwner {
-        require(index < 5, "bad index: it must be less than 5");
+        require(index < 4, "bad index: it must be less than 5");
         priceMap[index] = price;
     }
 
     function getPrice(uint256 index) public view returns (uint256) {
-        require(index < 5, "bad index: it must be less than 5");
+        require(index < 4, "bad index: it must be less than 5");
         return priceMap[index];
     }
 
@@ -49,8 +49,12 @@ contract WatchenzDB is IWatchenzDB, Ownable {
         _watchenzToken.updateTokenMetadata(tokenId);
     }
 
+    //price index : 0 -> setTimeZone
+    //price index : 1 -> setDynamicBackground
+    //price index : 2 -> setDynamicDial
+    //price index : 3 -> setLocation
+
     // /// token Setting
-    // //price index : 0
     // function setTimeZone(
     //     uint256 tokenId,
     //     uint24 timeZone
@@ -136,18 +140,18 @@ contract WatchenzDB is IWatchenzDB, Ownable {
         //     _nextSetting.htmlWrapper = tokenSetting.htmlWrapper;
         // }
         if (tokenSettingFlag.dynamicBackgroundFlag == true) {
-            _val += priceMap[2];
+            _val += priceMap[1];
             _nextSetting.dynamicBackground = tokenSetting.dynamicBackground;
         }
         if (tokenSettingFlag.dynamicDialFlag == true) {
-            _val += priceMap[3];
+            _val += priceMap[2];
             _nextSetting.dynamicDial = tokenSetting.dynamicDial;
         }
         if (tokenSettingFlag.locationParameterFlag == true) {
-            _val += priceMap[4];
+            _val += priceMap[3];
             _nextSetting.locationParameter = tokenSetting.locationParameter;
         }
-        require(_val <= msg.value, "bad price 5");
+        require(_val <= msg.value, "wrong value of ETH");
 
         TokenSettings[tokenId] = _nextSetting;
     }
