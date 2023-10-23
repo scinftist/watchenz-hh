@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /// @title EIP-721 Metadata Update Extension
 
 interface IERC4906 {
