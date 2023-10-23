@@ -22,8 +22,13 @@ function sleep(second) {
 }
 
 // async main
+// run.
 async function main() {
-  // const watchenzToken = await ethers.deployContract("WatchenzToken");
+  const etherscanProvider = new ethers.EtherscanProvider(run.etherscanProvider);
+
+  const watchenzToken = await etherscanProvider.getContract(
+    "0x7189dbcd898fe7b248078b8231ae0d5b2ada6ceb"
+  );
   // console.log("Deploying WatchenzToken Contract ...");
   // await watchenzToken.waitForDeployment();
   // console.log(
@@ -32,35 +37,19 @@ async function main() {
 
   // await verify(await watchenzToken.getAddress(), []);
   // await sleep(60);
-  // //-----
-  // const watchenzDB = await ethers.deployContract("WatchenzDB");
-  // console.log("Deploying WatchenzDB Contract...");
-  // await watchenzDB.waitForDeployment();
-  // console.log(
-  //   `Deployed WatchenzDB contract to:${await watchenzDB.getAddress()}`
-  // );
-  // await verify(await watchenzDB.getAddress(), []);
-  // await sleep(60);
-  // //-----
-  // const watchenzRenderer = await ethers.deployContract("WatchenzRenderer");
-  // console.log("Deploying WatchenzRenderer Contract...");
-  // await watchenzRenderer.waitForDeployment();
-  // console.log(
-  //   `Deployed WatchenzRenderer contract to:${await watchenzRenderer.getAddress()}`
-  // );
-  // await verify(await watchenzRenderer.getAddress(), []);
-  // await sleep(60);
-
-  // //-----
-  // const watchenzChannel = await ethers.deployContract("WatchenzChannel");
-  // console.log("Deploying watchenzChannel Contract...");
-  // await watchenzChannel.waitForDeployment();
-  // console.log(
-  //   `Deployed watchenzChannel contract to:${await watchenzChannel.getAddress()}`
-  // );
-  // await verify(await watchenzChannel.getAddress(), []);
-  // await sleep(60);
-  // //----
+  //-----
+  const watchenzDB = await etherscanProvider.getContract(
+    "0x77d63a7179AA6c6b4f58FA44CFF7bF35b3da7999"
+  );
+  //-----
+  const watchenzRenderer = await etherscanProvider.getContract(
+    "0x3A74325328201953B3C8a5ea3b6095Cfa5D350C6"
+  );
+  //-----
+  const watchenzChannel = await etherscanProvider.getContract(
+    "0x125a477ec87779796d4e46E9e4829158Fde46E6C"
+  );
+  //----
 
   // //---set WatchenzToken
   // await watchenzToken.setDB(watchenzDB.getAddress());
@@ -69,38 +58,21 @@ async function main() {
   // console.log(
   //   `getMetadataRenderer ${await watchenzToken.getMetadataRenderer()}`
   // );
-  // await sleep(10);
+
   // //--- set WatchenzDB
   // await watchenzDB.setTokenContract(watchenzToken.getAddress());
   // console.log(`getTokenContract ${await watchenzDB.getTokenContract()}`);
   // //--
-
-  const WRfactory = await ethers.getContractFactory("WatchenzRenderer");
-  const watchenzRenderer = await WRfactory.attach(
-    "0x9055Cc3d312F2301Bc8c6F3106160fA9730baB2A"
-  );
-
-  const WDBfactory = await ethers.getContractFactory("WatchenzRenderer");
-  const watchenzDB = await WDBfactory.attach(
-    "0x80d68f010035740c0ce40ED7abC09E7928c58703"
-  );
-
-  const WCHfactory = await ethers.getContractFactory("WatchenzRenderer");
-  const watchenzChannel = await WCHfactory.attach(
-    "0x04E2553aFAB4e3E18Fe754F8dA8b3De881fDE4AC"
-  );
-
   // await watchenzDB.setChannelContract(watchenzChannel.getAddress());
   // console.log(
   //   `getChannelContract contract ${await watchenzDB.getChannelContract()}`
   // );
-  await sleep(10);
-  //--- set watchenzRenderer
-  await watchenzRenderer.setWatchenzDB(watchenzDB.getAddress());
-  console.log(
-    `getWatchenzDB contract ${await watchenzRenderer.getWatchenzDB()}`
-  );
-  await sleep(10);
+  // //--- set watchenzRenderer
+  // await watchenzRenderer.setWatchenzDB(watchenzDB.getAddress());
+  // console.log(
+  //   `getWatchenzDB contract ${await watchenzRenderer.getWatchenzDB()}`
+  // );
+
   console.log(`setting svgs....`);
   const jj = require("../rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json");
 
@@ -116,14 +88,15 @@ async function main() {
     "crownGaurd", //8
     "ref", //9
   ];
+  partsList = partsList.slice(6);
 
   let elements;
   for (let i = 0; i < partsList.length; i++) {
     elements = jj[partsList[i]];
-    // console.log(`${elements}`);
+    console.log(`${elements}`);
     // console.log(` ${Object.keys(elements)}`);
     for (let _KEY in Object.keys(elements)) {
-      await sleep(10);
+      await sleep(30);
       await watchenzRenderer.set_svg(
         i,
         _KEY,
@@ -151,8 +124,8 @@ async function main() {
   ];
 
   for (let i = 0; i < partsKeys.length; i++) {
+    await sleep(30);
     await watchenzRenderer.setSVGParts(i, jParts[partsKeys[i]]);
-    await sleep(10);
   }
   console.log(`SVG_parts have been set`);
   //--------
@@ -161,17 +134,13 @@ async function main() {
   let elementGene;
   let geneTemp;
   for (let i = 0; i < partsList.length; i++) {
-    await sleep(10);
+    await sleep(30);
     elementGene = partsList[i] + "_gene";
     geneTemp = "0x" + jb[elementGene];
     await watchenzRenderer.setGene(i, geneTemp);
   }
   console.log(`Genes has been set`);
 
-  acclist = await ethers.getSigners();
-  // for (let i = 1; i < 10; i++) {
-  //   console.log(`${await acclist[i].getAddress()}`);
-  // }
   console.log(`setting exception tokenIds...`);
   const fs = require("fs");
   csv_exceptional = fs.readFileSync(
@@ -184,6 +153,7 @@ async function main() {
   let tempVal;
   for (let i = 0; i < _tokenArray.length; i++) {
     // console.log(`${_dataArray}}`);
+
     tempVal = _tokenArray[i].split(",");
     // console.log(`${temp}`);
     safeIds.push(parseInt(tempVal[0]) + 24000);
@@ -192,8 +162,8 @@ async function main() {
 
   let lenSafeId = safeIds.length;
   for (let i = 0; i < 4; i++) {
+    await sleep(20);
     if (lenSafeId >= 25) {
-      await sleep(10);
       await watchenzRenderer.setExceptionTokens(
         tokenIds.slice(0 + i * 25, 0 + i * 25 + 25),
         safeIds.slice(0 + i * 25, 0 + i * 25 + 25)
@@ -211,24 +181,24 @@ async function main() {
   csv_whitelist = fs.readFileSync("AuxData/WhiteList.csv");
   // AuxData/WhiteList.csv
 
-  const _dataArray = await csv_whitelist.toString().split("\n");
-  let addresses = [];
-  let quantities = [];
-  let temp;
-  for (let i = 0; i < _dataArray.length; i++) {
-    // console.log(`${_dataArray}}`);
-    temp = _dataArray[i].split(",");
-    // console.log(`${temp}`);
-    addresses.push(temp[0]);
-    quantities.push(temp[1]);
-  }
+  // const _dataArray = await csv_whitelist.toString().split("\n");
+  // let addresses = [];
+  // let quantities = [];
+  // let temp;
+  // for (let i = 0; i < _dataArray.length; i++) {
+  //   await sleep(30);
+  //   // console.log(`${_dataArray}}`);
+  //   temp = _dataArray[i].split(",");
+  //   // console.log(`${temp}`);
+  //   addresses.push(temp[0]);
+  //   quantities.push(temp[1]);
+  // }
 
-  // if error has been raise break it in to smaller transactions
-  for (let i = 0; i < 1; i++) {
-    await sleep(10);
-    await watchenzToken.addToWhitelist(addresses, quantities);
-  }
-  console.log(`Whitelisted accounts have been set`);
+  // // if error has been raise break it in to smaller transactions
+  // for (let i = 0; i < 1; i++) {
+  //   await watchenzToken.addToWhitelist(addresses, quantities);
+  // }
+  console.log(`did not Whitelisted accounts have been set`);
 
   // let acclist, _signer;
   // acclist = await ethers.getSigners();
