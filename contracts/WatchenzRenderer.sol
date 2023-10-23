@@ -253,10 +253,10 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 '{"trait_type": "Body", "value": "',
                 get_title(0, _genome.color_a),
                 '"},',
-                '"trait_type": "Dial", "value": "',
+                '{"trait_type": "Dial", "value": "',
                 get_title(1, _genome.color_b),
                 '"},',
-                '"trait_type": "Bezel material", "value": "',
+                '{"trait_type": "Bezel material", "value": "',
                 get_title(2, _genome.color_c),
                 '"},'
             )
@@ -266,10 +266,10 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 '{"trait_type": "Strap", "value": "',
                 get_title(3, _genome.strap),
                 '"},',
-                '"trait_type": "Hour Marker", "value": "',
+                '{"trait_type": "Hour Marker", "value": "',
                 get_title(4, _genome.hour_marker),
                 '"},',
-                '"trait_type": "Minute Marker", "value": "',
+                '{"trait_type": "Minute Marker", "value": "',
                 get_title(5, _genome.minute_marker),
                 '"},'
             )
@@ -279,10 +279,10 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 '{"trait_type": "Hands", "value": "',
                 get_title(6, _genome.hands),
                 '"},',
-                '"trait_type": "Bezel Type", "value": "',
+                '{"trait_type": "Bezel Type", "value": "',
                 get_title(7, _genome.bezel_marker),
                 '"},',
-                '"trait_type": "Crown", "value": "',
+                '{"trait_type": "Crown", "value": "',
                 get_title(8, _genome.crownGaurd),
                 '"},'
                 '{"trait_type": "Reference", "value": "',
