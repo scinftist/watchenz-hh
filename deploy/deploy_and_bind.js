@@ -17,6 +17,8 @@ const verify = async (contractAddress, args) => {
   }
 };
 
+const _verify = true;
+
 function sleep(second) {
   return new Promise((resolve) => setTimeout(resolve, second * 1000));
 }
@@ -24,6 +26,7 @@ function sleep(second) {
 // async main
 async function main() {
   const fs = require("fs");
+
   //deploying watchenzToken.sol
   const watchenzToken = await ethers.deployContract("WatchenzToken");
   console.log("Deploying WatchenzToken Contract ...");
@@ -32,15 +35,15 @@ async function main() {
     `Deployed WatchenzToken contract to:${await watchenzToken.getAddress()}`
   );
 
-  // await verify(await watchenzToken.getAddress(), []);
   fs.writeFile(
-    "WatchenzToken_ADDRESS.txt",
+    "deploy/DEPLOYED_ADDRESSES/watchenzToken_ADDRESS.txt",
     await watchenzToken.getAddress(),
     (err) => {
       // In case of a error throw err.
       if (err) throw err;
     }
   );
+  if (_verify) await verify(await watchenzToken.getAddress(), []);
   await sleep(60); // so the API does not overheat :p
   //-----
   //deploying watchenzDB.sol
@@ -50,7 +53,15 @@ async function main() {
   console.log(
     `Deployed WatchenzDB contract to:${await watchenzDB.getAddress()}`
   );
-  await verify(await watchenzDB.getAddress(), []);
+  fs.writeFile(
+    "deploy/DEPLOYED_ADDRESSES/watchenzDB_ADDRESS.txt",
+    await watchenzDB.getAddress(),
+    (err) => {
+      // In case of a error throw err.
+      if (err) throw err;
+    }
+  );
+  if (_verify) await verify(await watchenzDB.getAddress(), []);
   await sleep(60); // so the API does not overheat :p
   //-----
   //deploying watchenzRenderer.sol
@@ -60,7 +71,15 @@ async function main() {
   console.log(
     `Deployed WatchenzRenderer contract to:${await watchenzRenderer.getAddress()}`
   );
-  await verify(await watchenzRenderer.getAddress(), []);
+  fs.writeFile(
+    "deploy/DEPLOYED_ADDRESSES/watchenzRenderer_ADDRESS.txt",
+    await watchenzRenderer.getAddress(),
+    (err) => {
+      // In case of a error throw err.
+      if (err) throw err;
+    }
+  );
+  if (_verify) await verify(await watchenzRenderer.getAddress(), []);
   await sleep(60); // so the API does not overheat :p
 
   //-----
@@ -71,11 +90,20 @@ async function main() {
   console.log(
     `Deployed watchenzChannel contract to:${await watchenzChannel.getAddress()}`
   );
-  await verify(await watchenzChannel.getAddress(), []);
+  fs.writeFile(
+    "deploy/DEPLOYED_ADDRESSES/watchenzChannel_ADDRESS.txt",
+    await watchenzChannel.getAddress(),
+    (err) => {
+      // In case of a error throw err.
+      if (err) throw err;
+    }
+  );
+  if (_verify) await verify(await watchenzChannel.getAddress(), []);
   await sleep(60); // so the API does not overheat :p
   //----
 
   //---set WatchenzToken
+
   await watchenzToken.setDB(watchenzDB.getAddress());
   console.log(`getDB ${await watchenzToken.getDB()}`);
   await watchenzToken.setMetadateRenderer(watchenzRenderer.getAddress());

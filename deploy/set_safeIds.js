@@ -7,11 +7,23 @@ function sleep(second) {
 
 // async main
 async function main() {
+  const fs = require("fs");
   //-----
+  const watchenzToken_address = fs
+    .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzToken_ADDRESS.txt")
+    .toString();
+  const watchenzDB_address = fs
+    .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzDB_ADDRESS.txt")
+    .toString();
+  const watchenzRenderer__address = fs
+    .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzRenderer_ADDRESS.txt")
+    .toString();
+  const watchenzChannel_address = fs
+    .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzChannel_ADDRESS.txt")
+    .toString();
+  //attach to metadatarenderer deployed contract
   const WRfactory = await ethers.getContractFactory("WatchenzRenderer");
-  const watchenzRenderer = await WRfactory.attach(
-    "0x9055Cc3d312F2301Bc8c6F3106160fA9730baB2A"
-  );
+  const watchenzRenderer = await WRfactory.attach(watchenzRenderer__address);
   //   const watchenzRenderer = await ethers.deployContract("WatchenzRenderer");
   console.log("Deploying WatchenzRenderer Contract...");
   //   await watchenzRenderer.waitForDeployment();
@@ -19,82 +31,8 @@ async function main() {
     `Deployed WatchenzRenderer contract to:${await watchenzRenderer.getAddress()}`
   );
 
-  //   await sleep(60);
-
-  // console.log(`setting svgs....`);
-  // const jj = require("../rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json");
-
-  // partsList = [
-  //   "color_a", //0
-  //   "color_b", //1
-  //   "color_c", //2
-  //   "strap", //3
-  //   "hour_marker", //4
-  //   "minute_marker", //5
-  //   "hands", //6
-  //   "bezel_marker",
-  //   "crownGaurd", //8
-  //   "ref", //9
-  // ];
-
-  // let elements;
-  // for (let i = 0; i < partsList.length; i++) {
-  //   elements = jj[partsList[i]];
-  //   console.log(`starting ${partsList[i]}`);
-  //   // console.log(`${elements}`);
-  //   // console.log(` ${Object.keys(elements)}`);
-  //   for (let _KEY in Object.keys(elements)) {
-  //     await sleep(10);
-  //     await watchenzRenderer.set_svg(
-  //       i,
-  //       _KEY,
-  //       elements[_KEY].code,
-  //       elements[_KEY].name
-  //     );
-  //   }
-  // }
-  // console.log(`svgs have been set`);
-  // // core patrs of Watchenz
-  // console.log(`setting SVG_parts....`);
-  // const jParts = require("../AuxData/SVG_PARTS.json");
-  // partsKeys = [
-  //   "_svgPart0",
-  //   "_svgPart1",
-  //   "_svgPart2",
-  //   "_svgPart3",
-  //   "_svgPart4",
-  //   "_svgPart5",
-  //   "_svgPart6",
-  //   "_svgPart7",
-  //   "_svgPart8",
-  //   "_svgPart9",
-  //   "_svgPart10",
-  // ];
-
-  // for (let i = 0; i < partsKeys.length; i++) {
-  //   await watchenzRenderer.setSVGParts(i, jParts[partsKeys[i]]);
-  //   await sleep(10);
-  // }
-  // console.log(`SVG_parts have been set`);
-  //--------
-  // console.log(`setting Genes....`);
-  // const jb = require("../rarity_finalized/Rarity-check/target_folder/GENE_SOURCE.json");
-  // let elementGene;
-  // let geneTemp;
-  // for (let i = 0; i < partsList.length; i++) {
-  //   await sleep(10);
-  //   elementGene = partsList[i] + "_gene";
-  //   geneTemp = "0x" + jb[elementGene];
-  //   await watchenzRenderer.setGene(i, geneTemp);
-  // }
-  // console.log(`Genes has been set`);
-
-  //   acclist = await ethers.getSigners();
-  //   // for (let i = 1; i < 10; i++) {
-  //   //   console.log(`${await acclist[i].getAddress()}`);
-  //   // }
   console.log(`setting exception tokenIds...`);
-  const fs = require("fs");
+
   csv_exceptional = fs.readFileSync(
     "./rarity_finalized/Rarity-check/target_folder/exceptional_out.csv"
   );
@@ -127,37 +65,6 @@ async function main() {
     lenSafeId = lenSafeId - i * 25;
     await sleep(10);
   }
-  //   console.log(`exception tokenIds have been set`);
-  //   console.log(`setting WhiteListed accounts..`);
-  //   csv_whitelist = fs.readFileSync("AuxData/WhiteList.csv");
-  //   // AuxData/WhiteList.csv
-
-  //   const _dataArray = await csv_whitelist.toString().split("\n");
-  //   let addresses = [];
-  //   let quantities = [];
-  //   let temp;
-  //   for (let i = 0; i < _dataArray.length; i++) {
-  //     // console.log(`${_dataArray}}`);
-  //     temp = _dataArray[i].split(",");
-  //     // console.log(`${temp}`);
-  //     addresses.push(temp[0]);
-  //     quantities.push(temp[1]);
-  //   }
-
-  //   // if error has been raise break it in to smaller transactions
-  //   for (let i = 0; i < 1; i++) {
-  //     await sleep(10);
-  //     await watchenzToken.addToWhitelist(addresses, quantities);
-  //   }
-  //   console.log(`Whitelisted accounts have been set`);
-
-  //   // let acclist, _signer;
-  //   // acclist = await ethers.getSigners();
-
-  //   // console.log(`sss`);
-  //   console.log(`whattttttt\n ${await watchenzToken.tokenURI(1)}`);
-
-  // yarn ins
 }
 
 // main
