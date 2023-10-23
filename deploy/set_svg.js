@@ -8,6 +8,7 @@ function sleep(second) {
 // async main
 async function main() {
   //-----
+  const fs = require("fs");
   const watchenzToken_address = fs
     .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzToken_ADDRESS.txt")
     .toString();

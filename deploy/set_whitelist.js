@@ -24,41 +24,47 @@ async function main() {
   //attach to metadatarenderer deployed contract
   const WRfactory = await ethers.getContractFactory("WatchenzRenderer");
   const watchenzRenderer = await WRfactory.attach(watchenzRenderer__address);
-  //
-  console.log("Attaching WatchenzRenderer Contract...");
+  //   const watchenzRenderer = await ethers.deployContract("WatchenzRenderer");
+  console.log("Deploying WatchenzRenderer Contract...");
   //   await watchenzRenderer.waitForDeployment();
   console.log(
     `Deployed WatchenzRenderer contract to:${await watchenzRenderer.getAddress()}`
   );
 
-  //   await sleep(60);
+  console.log(`setting exception tokenIds...`);
 
-  console.log(`svgs have been set`);
-  // core patrs of Watchenz
-  console.log(`setting SVG_parts....`);
-  const jParts = require("../AuxData/SVG_PARTS.json");
-  partsKeys = [
-    "_svgPart0",
-    "_svgPart1",
-    "_svgPart2",
-    "_svgPart3",
-    "_svgPart4",
-    "_svgPart5",
-    "_svgPart6",
-    "_svgPart7",
-    "_svgPart8",
-    "_svgPart9",
-    "_svgPart10",
-  ];
-
-  for (let i = 0; i < partsKeys.length; i++) {
-    console.log(`uploding ${partsKeys[i]}`);
-    await watchenzRenderer.setSVGParts(i, jParts[partsKeys[i]]);
-    await sleep(10);
-    console.log(` ${partsKeys[i]} has been uploaded`);
+  csv_exceptional = fs.readFileSync(
+    "./rarity_finalized/Rarity-check/target_folder/exceptional_out.csv"
+  );
+  //exceptionTokens for nonFungibility
+  const _tokenArray = await csv_exceptional.toString().split("\n").slice(1, -1);
+  let tokenIds = [];
+  let safeIds = [];
+  let tempVal;
+  for (let i = 0; i < _tokenArray.length; i++) {
+    // console.log(`${_dataArray}}`);
+    tempVal = _tokenArray[i].split(",");
+    // console.log(`${temp}`);
+    safeIds.push(parseInt(tempVal[0]) + 24000);
+    tokenIds.push(tempVal[1]);
   }
-  console.log(`SVG_parts have been set`);
-  //   //--------
+
+  let lenSafeId = safeIds.length;
+  for (let i = 0; i < 4; i++) {
+    if (lenSafeId >= 25) {
+      await watchenzRenderer.setExceptionTokens(
+        tokenIds.slice(0 + i * 25, 0 + i * 25 + 25),
+        safeIds.slice(0 + i * 25, 0 + i * 25 + 25)
+      );
+    } else {
+      await watchenzRenderer.setExceptionTokens(
+        tokenIds.slice(0 + i * 25, 0 + i * 25 + lenSafeId),
+        safeIds.slice(0 + i * 25, 0 + i * 25 + lenSafeId)
+      );
+    }
+    lenSafeId = lenSafeId - i * 25;
+    await sleep(10);
+  }
 }
 
 // main

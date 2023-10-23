@@ -19,7 +19,7 @@ module.exports = {
       url: "https://goerli.base.org",
       accounts: [PRIVATE_KEY],
       chainId: 84531,
-      gasPrice: 2000_000_000,
+      gasPrice: 2_000_000_000,
     },
   },
   etherscan: {

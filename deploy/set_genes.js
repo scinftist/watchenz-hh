@@ -10,18 +10,10 @@ async function main() {
   const fs = require("fs");
   //-----
   console.log(`setting genes ...`);
-  const watchenzToken_address = fs
-    .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzToken_ADDRESS.txt")
-    .toString();
-  const watchenzDB_address = fs
-    .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzDB_ADDRESS.txt")
-    .toString();
   const watchenzRenderer__address = fs
     .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzRenderer_ADDRESS.txt")
     .toString();
-  const watchenzChannel_address = fs
-    .readFileSync("deploy/DEPLOYED_ADDRESSES/watchenzChannel_ADDRESS.txt")
-    .toString();
+
   //attach to metadatarenderer deployed contract
   const WRfactory = await ethers.getContractFactory("WatchenzRenderer");
   const watchenzRenderer = await WRfactory.attach(watchenzRenderer__address);
@@ -57,7 +49,7 @@ async function main() {
     console.log(`uploading : ${elementGene}`);
     geneTemp = "0x" + jb[elementGene];
     await watchenzRenderer.setGene(i, geneTemp);
-    console.log(`  ${elementGene} is uploaded.`);
+    console.log(` ${elementGene} has been uploaded.`);
     await sleep(10);
   }
   console.log(`Genes has been set`);
