@@ -171,7 +171,7 @@ async function main() {
     temp = _dataArray[i].split(",");
     // console.log(`${temp}`);
     addresses.push(temp[0]);
-    quantities.push(temp[1]);
+    quantities.push(parseInt(temp[1]) * 25);
   }
 
   // if error has been raise break it in to smaller transactions

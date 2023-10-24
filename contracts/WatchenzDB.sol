@@ -50,80 +50,6 @@ contract WatchenzDB is IWatchenzDB, Ownable {
         _watchenzToken.updateTokenMetadata(tokenId);
     }
 
-    //price index : 0 -> setTimeZone
-    //price index : 1 -> setDynamicBackground
-    //price index : 2 -> setDynamicDial
-    //price index : 3 -> setLocation
-
-    // /// token Setting
-    // function setTimeZone(
-    //     uint256 tokenId,
-    //     uint24 timeZone
-    // ) public payable onlyTokenOwner(tokenId) {
-    //     require(priceMap[0] <= msg.value, "bad price0");
-    //     require(timeZone <= 86400, "day is 86400 sec");
-    //     TokenSettings[tokenId].timeZone = timeZone;
-    // }
-
-    // //price index : 1
-    // function setHtmlWrapper(
-    //     uint256 tokenId,
-    //     bool _hmlWrapper
-    // ) public payable onlyTokenOwner(tokenId) {
-    //     // require(priceMap[1] <= msg.value, "bad price1");
-    //     // TokenSettings[tokenId].htmlWrapper = _hmlWrapper;
-    // }
-
-    // //price index : 2
-    // function setDynamicBackground(
-    //     uint256 tokenId,
-    //     string memory url
-    // ) public payable onlyTokenOwner(tokenId) {
-    //     require(priceMap[2] <= msg.value, "bad price2");
-    //     TokenSettings[tokenId].dynamicBackground = url;
-    // }
-
-    // //price index : 3
-    // function setDynamicDial(
-    //     uint256 tokenId,
-    //     string memory url
-    // ) public payable onlyTokenOwner(tokenId) {
-    //     require(priceMap[3] <= msg.value, "bad price3");
-    //     TokenSettings[tokenId].dynamicBackground = url;
-    // }
-
-    // //price index : 4
-    // function setLocation(
-    //     uint256 tokenId,
-    //     string memory location
-    // ) public payable onlyTokenOwner(tokenId) {
-    //     require(priceMap[4] <= msg.value, "bad price4");
-    //     TokenSettings[tokenId].locationParameter = location;
-    // }
-
-    // function setSetting(
-    //     uint256 tokenId,
-    //     uint24 timeZone,
-    //     bool htmlWrapper,
-    //     string memory dynamicBackground,
-    //     string memory dynamicDial,
-    //     string memory location
-    // ) public payable onlyTokenOwner(tokenId) {
-    //     // require(timeZone <= 86400, "days is 86400 sec");
-    //     // uint256 _price;
-    //     // for (uint256 i = 0; i < 5; i++) {
-    //     //     _price += priceMap[i];
-    //     // }
-    //     // require(_price <= msg.value, "bad price 5");
-    //     // TokenSettings[tokenId] = TokenSetting(
-    //     //     timeZone,
-    //     //     htmlWrapper,
-    //     //     dynamicBackground,
-    //     //     dynamicDial,
-    //     //     location
-    //     // );
-    // }
-
     function setSetting(
         uint256 tokenId,
         TokenSetting memory tokenSetting,
@@ -136,10 +62,7 @@ contract WatchenzDB is IWatchenzDB, Ownable {
             _val += priceMap[0];
             _nextSetting.timeZone = tokenSetting.timeZone;
         }
-        // if (tokenSettingFlag.htmlWrapperFlag == true) {
-        //     _val += priceMap[1];
-        //     _nextSetting.htmlWrapper = tokenSetting.htmlWrapper;
-        // }
+
         if (tokenSettingFlag.dynamicBackgroundFlag == true) {
             _val += priceMap[1];
             _nextSetting.dynamicBackground = tokenSetting.dynamicBackground;
@@ -192,4 +115,10 @@ contract WatchenzDB is IWatchenzDB, Ownable {
         }
         return _returnSetting;
     }
+
+    function withdrawFunds() public onlyOwner {
+        payable(owner()).transfer(address(this).balance);
+    }
+
+    receive() external payable virtual {}
 }

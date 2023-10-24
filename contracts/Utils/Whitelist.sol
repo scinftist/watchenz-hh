@@ -20,7 +20,6 @@ contract Whitelist is Ownable {
         );
         for (uint i = 0; i < toAddAddresses.length; i++) {
             whitelist[toAddAddresses[i]] = quantities[i];
-            // _quantityOfWhiteList += quantities[i];
         }
     }
 

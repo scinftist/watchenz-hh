@@ -304,6 +304,21 @@ describe("testing WatchenzToken.sol", () => {
       await expect(watchenzToken.connect(_signer).whitelistMint()).not.to.be
         .reverted;
     }
+    let _bal = await ethers.provider.getBalance(watchenzToken.getAddress());
+    expect(_bal).not.to.equal(0);
+    if (_verbose) console.log(` contract balance before ${_bal}`);
+    let _ownerBal = await ethers.provider.getBalance(
+      await watchenzToken.owner()
+    );
+    if (_verbose) console.log(`owner balance before ${_ownerBal}`);
+    await watchenzToken
+      .connect(await ethers.getSigner(await watchenzToken.owner()))
+      .withdrawFunds();
+    _bal = await ethers.provider.getBalance(watchenzToken.getAddress());
+    if (_verbose) console.log(`contract balance after ${_bal}`);
+    _ownerBal = await ethers.provider.getBalance(await watchenzToken.owner());
+    if (_verbose) console.log(`owner balance after ${_ownerBal}`);
+    await expect(_bal).to.equal(0);
   });
 
   it("WatchenzToken: Ownables", async () => {

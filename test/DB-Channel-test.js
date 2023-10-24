@@ -464,6 +464,20 @@ describe("testing WatchenzDB.sol and WatchenzChannel.sol", () => {
     expect(_renderedSVG.includes(_dynamicDialIntro + _dynamicDial)).to.equal(
       true
     );
+    // withdraw check is a cherry on top i'm tierd
+    let _bal = await ethers.provider.getBalance(watchenzDB.getAddress());
+    expect(_bal).not.to.equal(0);
+    if (_verbose) console.log(` contract balance before ${_bal}`);
+    let _ownerBal = await ethers.provider.getBalance(await watchenzDB.owner());
+    if (_verbose) console.log(`owner balance before ${_ownerBal}`);
+    await watchenzDB
+      .connect(await ethers.getSigner(await watchenzDB.owner()))
+      .withdrawFunds();
+    _bal = await ethers.provider.getBalance(watchenzDB.getAddress());
+    if (_verbose) console.log(`contract balance after ${_bal}`);
+    _ownerBal = await ethers.provider.getBalance(await watchenzDB.owner());
+    if (_verbose) console.log(`owner balance after ${_ownerBal}`);
+    await expect(_bal).to.equal(0);
 
     expect(await watchenzRenderer.renderTokenById(1)).not.to.equal("");
   });

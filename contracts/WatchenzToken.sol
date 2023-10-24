@@ -19,8 +19,8 @@ contract WatchenzToken is
     address private _WatchenzDB;
 
     //
-    uint256 public _price = 0.001 ether;
-    uint256 public _duration = 14 days;
+    uint256 public _price = 0.0024 ether;
+    uint256 public _duration = 30 days;
     uint256 public constant _whitelistPrevilagedTime = 3 days;
     uint256 public _startTime;
     uint256 public maxSupply = 24000;
@@ -30,7 +30,7 @@ contract WatchenzToken is
     bool public finalizeMaxSUpply = false;
 
     // set before deploy
-    uint256 public constant numberOfTokenInWhiteList = 299;
+    uint256 public constant numberOfTokenInWhiteList = 1300;
 
     // start sale function?
     constructor() ERC721A("Watchenz", "WTC") {
@@ -155,10 +155,7 @@ contract WatchenzToken is
             );
         }
         require(totalSupply() + quantity < maxSupply, "it's finishesd");
-        // require(
-        //     quantity <= mintPerTransation,
-        //     "quantity should be less than 26"
-        // );
+
         require(_startTime < block.timestamp, "it's not the time");
         require(
             block.timestamp < _startTime + _duration,
@@ -175,4 +172,10 @@ contract WatchenzToken is
         }
         // _safeMint(msg.sender, quantity);
     }
+
+    function withdrawFunds() public onlyOwner {
+        payable(owner()).transfer(address(this).balance);
+    }
+
+    receive() external payable virtual {}
 }
