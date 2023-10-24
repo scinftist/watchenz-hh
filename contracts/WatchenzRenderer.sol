@@ -33,6 +33,10 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
     string private constant svgEnd = "</svg>";
     string private constant svgHead =
         '<svg id="thewatch" width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">';
+
+    string private constant _newHtmlSVGHead =
+        '<svg id="thewatch" width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">';
+
     // string private constant svgPart0 =
     //     '<style>text {text-anchor: center;dominant-baseline: middle;}</style><defs id="defs">';
     // // colorURLS 01 2
@@ -315,9 +319,17 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 Base64.encode(bytes(img))
             )
         );
-
+        // string memory animation = string(
+        //     abi.encodePacked(_htmlHead, svgHead, _rawSVG, svgEnd, _htmlEnd)
+        // );
         string memory animation = string(
-            abi.encodePacked(_htmlHead, svgHead, _rawSVG, svgEnd, _htmlEnd)
+            abi.encodePacked(
+                _htmlHead,
+                _newHtmlSVGHead,
+                _rawSVG,
+                svgEnd,
+                _htmlEnd
+            )
         );
         // mime type html
         animation = string(
