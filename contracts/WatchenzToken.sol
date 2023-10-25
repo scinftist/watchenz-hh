@@ -19,7 +19,7 @@ contract WatchenzToken is
     address private _WatchenzDB;
 
     //
-    uint256 public _price = 0.0024 ether;
+    uint256 public _price = 0.0025 ether;
     uint256 public _duration = 30 days;
     uint256 public constant _whitelistPrevilagedTime = 3 days;
     uint256 public _startTime;
@@ -170,7 +170,6 @@ contract WatchenzToken is
         if (quantity != 0) {
             _safeMint(msg.sender, quantity);
         }
-        // _safeMint(msg.sender, quantity);
     }
 
     function withdrawFunds() public onlyOwner {

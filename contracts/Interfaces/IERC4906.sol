@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 /// @title EIP-721 Metadata Update Extension
+pragma solidity ^0.8.0;
 
 interface IERC4906 {
     /// @dev This event emits when the metadata of a token is changed.

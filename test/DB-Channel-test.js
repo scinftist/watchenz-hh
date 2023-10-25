@@ -478,7 +478,8 @@ describe("testing WatchenzDB.sol and WatchenzChannel.sol", () => {
     _ownerBal = await ethers.provider.getBalance(await watchenzDB.owner());
     if (_verbose) console.log(`owner balance after ${_ownerBal}`);
     await expect(_bal).to.equal(0);
-
+    if (_verbose)
+      console.log(`final svg after :\n ${await watchenzToken.tokenURI(1)} `);
     expect(await watchenzRenderer.renderTokenById(1)).not.to.equal("");
   });
   it("SVG includes right setting: set by Channel", async () => {
