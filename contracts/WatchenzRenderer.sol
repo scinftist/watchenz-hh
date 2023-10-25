@@ -19,7 +19,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
     //APIS
     string private _timeAPI = "https://worldtimeapi.org/api/timezone/Etc/UTC";
     string private _weatherAPI =
-        "https://watchenzonbase.vercel.app/api/currentweather?city=";
+        "https://watchenz.xyz/api/currentweather?city=";
     // day
     string private constant _day =
         '<g id="day"><path d="M199.35 79.375L196.752 74.875C196.464 74.375 196.825 73.75 197.402 73.75H202.598C203.175 73.75 203.536 74.375 203.248 74.875L200.65 79.375C200.361 79.875 199.639 79.875 199.35 79.375Z" fill="url(#a)" stroke="url(#c)" stroke-width="1"></path><path d="M247.792 92.1584C232.787 85.4778 216.548 82.0173 200.123 82.0001C183.698 81.9829 167.452 85.4094 152.433 92.0586L159.568 108.175C172.334 102.523 186.143 99.6104 200.105 99.6251C214.066 99.6397 227.869 102.581 240.623 108.26L247.792 92.1584Z" fill="white" stroke-width="1" stroke="#1c1c1c" filter="url(#innerShadow)"></path><text textLength="81" lengthAdjust="spacing"><textPath id="dayu" textLength="81" lengthAdjust="spacing" href="#datePath" font-family="Arial" font-size="10" font-weight="bold" dominant-baseline="central" text-anchor="start" fill="black">MONDAY</textPath></text></g>';
@@ -55,6 +55,13 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
         uint256 tokenId
     ) public view returns (string memory) {
         TokenSetting memory _tokenSetting = iwatchenzDB.getSetting(tokenId);
+        return _renderToken(tokenId, _tokenSetting);
+    }
+
+    function renderTokenByIdWithNoHref(
+        uint256 tokenId
+    ) public view returns (string memory) {
+        TokenSetting memory _tokenSetting; // = iwatchenzDB.getSetting(tokenId);
         return _renderToken(tokenId, _tokenSetting);
     }
 
@@ -270,19 +277,29 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
         string
             memory _htmlHead = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Watchenz</title></head><body>';
         string memory _htmlEnd = "</body></html>";
-        string memory _metadata = '{ "description" : "This Clockwork is Adjustable",'
-        '"name": "Watchenz",'
-        '"image": "';
-        string memory _temp = '", "animation_url": "';
+        string
+            memory _metadata = '{ "description" : "Customizable OnChain Watch with endless possibilities.","image": "';
+        // string memory _temp = '", "animation_url": "';
         string memory metaByteString;
         // string memory attributes = generateAttributes(tokenId);
-        string memory _rawSVG = renderTokenById(tokenId);
+        // string memory _rawSVG = renderTokenById(tokenId);
+        // string memory _noHrefSVG = renderTokenByIdWithNoHref(tokenId);
 
-        string memory img = string(abi.encodePacked(svgHead, _rawSVG, svgEnd));
-        img = string(
+        // = string(abi.encodePacked(svgHead, _noHrefSVG, svgEnd));
+        string memory img = string(
             abi.encodePacked(
                 "data:image/svg+xml;base64,",
-                Base64.encode(bytes(img))
+                Base64.encode(
+                    bytes(
+                        (
+                            abi.encodePacked(
+                                svgHead,
+                                renderTokenByIdWithNoHref(tokenId),
+                                svgEnd
+                            )
+                        )
+                    )
+                )
             )
         );
         // string memory animation = string(
@@ -292,7 +309,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
             abi.encodePacked(
                 _htmlHead,
                 _newHtmlSVGHead,
-                _rawSVG,
+                renderTokenById(tokenId),
                 svgEnd,
                 _htmlEnd
             )
@@ -309,7 +326,7 @@ contract WatchenzRenderer is WatchenzDataHandler, IMetadataRenderer {
                 abi.encodePacked(
                     _metadata,
                     img,
-                    _temp,
+                    '", "animation_url": "',
                     animation,
                     '",',
                     generateAttributes(tokenId),
