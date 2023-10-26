@@ -3,14 +3,8 @@ require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-chai-matchers");
 require("dotenv").config();
 
-const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "";
-const SEPOLIA_RPC_URL =
-  process.env.SEPOLIA_RPC_URL ||
-  "https://eth-sepolia.g.alchemy.com/v2/your-api-key";
-const PRIVATE_KEY =
-  process.env.PRIVATE_KEY ||
-  "0x11ee3108a03081fe260ecdc106554d09d9d1209bcafd46942b10e02943effc4a";
-const GOERLI_BASE_ETHERSCAN_API_KEY = process.env.BASE_ETHERSCAN_API_KEY || "";
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const BASE_ETHERSCAN_API_KEY = process.env.BASE_ETHERSCAN_API_KEY || "";
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -21,10 +15,16 @@ module.exports = {
       chainId: 84531,
       gasPrice: 2_000_000_000,
     },
+    MyBase: {
+      url: "https://mainnet.base.org",
+      accounts: [PRIVATE_KEY],
+      chainId: 8453,
+    },
   },
   etherscan: {
     apiKey: {
-      baseGoerli: "6JZBHYBJ3XIH6QMGG66W5YWACUM5CKSMMI",
+      baseGoerli: BASE_ETHERSCAN_API_KEY,
+      MyBase: BASE_ETHERSCAN_API_KEY,
     },
     customChains: [
       {
@@ -33,6 +33,14 @@ module.exports = {
         urls: {
           apiURL: "https://api-goerli.basescan.org/api",
           browserURL: "https://goerli.basescan.org/",
+        },
+      },
+      {
+        network: "MyBase",
+        chainId: 8453,
+        urls: {
+          apiURL: "https://api.basescan.org/api",
+          browserURL: "https://basescan.org/",
         },
       },
     ],
