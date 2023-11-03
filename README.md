@@ -18,6 +18,10 @@ you can find the scripts that is used for testing functionality of the smartcont
 
 collection of jupyter notebooks that used to clean the SVG data for smartcontract and examining the non-fungibility and creating a generative [**genes**](rarity_finalized/Rarity-check/target_folder/GENE_SOURCE.json) and [**SVG data strings**](rarity_finalized/RAW_DATA/Unified_json/SVG_DATA.json) and [**Exceptional token numbers**](rarity_finalized/Rarity-check/target_folder/exceptionalTokenNumbers.json) for collection, you can fnd out more [here in rarity_finalized](./rarity_finalized)
 
+## TokenId:1
+
+![overview](assets4git/token-1.svg)
+
 # Hardhat Project
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
