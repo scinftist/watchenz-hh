@@ -8,7 +8,7 @@ you can find the samrt contracts and the interfaces that used in this project, [
 
 ## deply
 
-you can find the deploying scripts that used for deploying these smart ccontract and initializing the project, [here in deploy](./deploy)
+you can find the deploying scripts that used for deploying these smart contract and initializing the project, [here in deploy](./deploy)
 
 ## test
 
