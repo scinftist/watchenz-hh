@@ -1,6 +1,6 @@
 # Deploying contracts to live network
 
-the `deploy_and_bind.js` scripts found in this folder is the first step to deploy all 4 smart contracts and in the project and connect their interfaces. all of the addresses that are deployed are stored in `./DEPLOYED_ADDRESS` for other scripts.
+the `deploy_and_bind.js` scripts found in this folder is the first step to deploy all 4 smart contracts and in the project and connect their interfaces. all of the addresses that are deployed are stored in [./DEPLOYED_ADDRESS](./DEPLOYED_ADDRESS) for other scripts.
 
 ```shell
 yarn hardhat run deploy/deploy_and_bind.js --network MyBase
